@@ -5,7 +5,7 @@ export default function Success() {
     return (
         <>
             <h1>Payment Successful</h1>
-            <button onClick={()=> navigate("../")}>Back to menu</button>
+            <button onClick={()=> navigate("../")} className="button">Back to menu</button>
         </>
     );      
 }

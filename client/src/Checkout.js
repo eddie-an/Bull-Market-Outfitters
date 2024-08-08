@@ -24,7 +24,11 @@ const checkoutMethod = ()=> {
 function Checkout() {
     return(
     <div className="App">
-      <button onClick={()=> checkoutMethod()}>Checkout</button>
+        <h1 className="text-3xl font-bold underline">
+            Hello World!
+        </h1>
+      <button onClick={()=> checkoutMethod()}
+      className="button">Checkout</button>
     </div>
     );
 }
