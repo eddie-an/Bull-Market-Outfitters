@@ -11,7 +11,7 @@ const Products = [
     Style: Mid-century modern
     `,
     altDescription: "Mid-Century Modern Dresser",
-    imageLink: "/images/WideDresser.webp"},
+    imageLink: "/assets/WideDresser.webp"},
     {id: 2, priceInCents: 1499, name: "Artifical White Orchid", description: `
     This white Orchid is the best way to elevate your home interior. These flowers do not require any watering. You'll have everyone fooled because they look so lifelike.
 
@@ -21,7 +21,7 @@ const Products = [
     Features: Suitable for indoor and outdoor use.
     `,
     altDescription: "Artifical potted white Orchid with realistic looking green leaves and white petals",
-    imageLink: "/images/flowerDecoration.webp"},
+    imageLink: "/assets/flowerDecoration.webp"},
 
     ]
 

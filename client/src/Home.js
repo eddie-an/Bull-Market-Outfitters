@@ -4,6 +4,7 @@ import Cart from "./Cart";
 import Header from "./component/Header";
 import Products from "./Products";
 import ProductPopup from "./component/ProductPopup";
+import HeroSection from "./component/HeroSection"; // Import HeroSection
 
 function Home() {
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -43,6 +44,7 @@ function Home() {
   return(
   <div className="App w-full">
     <Header setIsCartDisplayed={setIsCartDisplayed}/>
+    <HeroSection/>
     {isCartDisplayed ? <Cart isDisplayed={isCartDisplayed} itemsInCart={itemsInCart} setIsCartDisplayed={setIsCartDisplayed} setItemsInCart={setItemsInCart}/>: <></>}
     {selectedProduct && (
       <ProductPopup
@@ -51,7 +53,7 @@ function Home() {
         onAddToCart={handleAddToCart}
       />
     )}
-    <span>
+    <span id="shop-now">
       <h4 className="mt-8 text-center text-xl font-medium mb-8">New Items</h4>
     </span>
     <div className="grid lg:grid-cols-4 md:grid-cols-3 gap-x-2 gap-y-6 ml-32 mr-32">
