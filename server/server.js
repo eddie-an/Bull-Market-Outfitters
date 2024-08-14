@@ -46,4 +46,5 @@ app.post('/create-checkout-session', async (req, res) => {
     }
 })
 
-app.listen(process.env.SERVER_PORT)
+const PORT = process.env.SERVER_PORT || 5000;
+app.listen(PORT)
