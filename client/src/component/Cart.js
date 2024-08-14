@@ -50,7 +50,7 @@ export default function Cart({isDisplayed, itemsInCart, setIsCartDisplayed, setI
                               {item.product.name}
                             </div>
                             <div className="text-gray-600 text-xs">
-                              ${item.product.priceInCents / 100}
+                              ${(item.product.priceInCents / 100).toFixed(2)}
                             </div>
                             <div className="flex justify-start items-center mb-4 mt-2">
                               <label className="mr-2 text-xs font-medium">Quantity:</label>
@@ -66,7 +66,7 @@ export default function Cart({isDisplayed, itemsInCart, setIsCartDisplayed, setI
 
                           <div className="flex flex-col">
                             <div className="font-bold text-sm">
-                              ${(item.product.priceInCents / 100) * item.quantity}
+                              ${((item.product.priceInCents / 100) * item.quantity).toFixed(2)}
                             </div>
                             <div>
                               <svg className="size-6 absolute right-2 bottom-4 hover:cursor-pointer" 

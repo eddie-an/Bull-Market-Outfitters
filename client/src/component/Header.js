@@ -1,27 +1,17 @@
+import { Link } from "react-router-dom";
+
 function Header({ setIsCartDisplayed }) {
     return (
       <div className="sticky top-0 w-full z-40 border-b border-gray-200 h-16 bg-gray-100 shadow-sm flex items-center justify-between px-8">
         <div className="flex items-center">
-          <h1 className="text-3xl font-semibold text-gray-800 tracking-tight">
-            ShopEase
-          </h1>
+          <Link to="/">
+            <h1 className="text-3xl font-semibold text-gray-800 tracking-tight">
+              ShopEase
+            </h1>
+          </Link>
           <span className="ml-4 px-3 py-1 bg-gray-200 text-gray-600 rounded-full text-xs tracking-wide font-medium">
             NEW
           </span>
-        </div>
-        <div className="relative w-1/3">
-          <input
-            type="text"
-            placeholder="Search items..."
-            className="w-full rounded-full px-4 py-2 bg-gray-50 text-gray-700 focus:outline-none"
-          />
-          <button
-            className="absolute right-2 top-2 text-gray-400 hover:text-gray-500 focus:outline-none"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-6 h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-4a7 7 0 1 0-14 0 7 7 0 0 0 14 0z" />
-            </svg>
-          </button>
         </div>
         <svg
           onClick={() => setIsCartDisplayed((prev) => !prev)}
