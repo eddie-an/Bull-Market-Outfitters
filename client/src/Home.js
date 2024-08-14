@@ -57,7 +57,7 @@ function Home({isCartDisplayed, setIsCartDisplayed, itemsInCart, setItemsInCart}
       <SearchBar onSearch={setSearchQuery} /> {/* Add SearchBar */}
       {isCartDisplayed && (
         <Cart
-          isDisplayed={isCartDisplayed}
+          isCartDisplayed={isCartDisplayed}
           itemsInCart={itemsInCart}
           setIsCartDisplayed={setIsCartDisplayed}
           setItemsInCart={setItemsInCart}
@@ -85,6 +85,15 @@ function Home({isCartDisplayed, setIsCartDisplayed, itemsInCart, setItemsInCart}
           ))}
         </div>
       </div>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
       <Footer />
     </div>
   );

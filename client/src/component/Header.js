@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 function Header({ setIsCartDisplayed }) {
     return (
-      <div className="sticky top-0 w-full z-40 border-b border-gray-200 h-16 bg-gray-100 shadow-sm flex items-center justify-between px-8">
+      <div className="sticky top-0 w-full z-40 border-b border-gray-200 h-20 bg-gray-100 drop-shadow-md flex items-center justify-between px-8">
         <div className="flex items-center">
           <Link to="/">
             <h1 className="text-3xl font-semibold text-gray-800 tracking-tight">
@@ -20,7 +20,7 @@ function Header({ setIsCartDisplayed }) {
           viewBox="0 0 24 24"
           strokeWidth="1.5"
           stroke="currentColor"
-          className="w-8 h-8 text-gray-700 hover:text-gray-900 cursor-pointer transition duration-300 ease-in-out"
+          className="w-8 h-8 text-gray-700 hover:text-gray-900 cursor-pointer"
         >
           <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
         </svg>

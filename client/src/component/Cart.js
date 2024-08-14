@@ -1,3 +1,5 @@
+
+
 const checkoutMethod = (itemsInCart) => {
     console.log(process.env.REACT_APP_SERVER_URL);
     fetch(`${process.env.REACT_APP_SERVER_URL}/create-checkout-session`, {
@@ -17,7 +19,7 @@ const checkoutMethod = (itemsInCart) => {
     })
 }
 
-export default function Cart({isDisplayed, itemsInCart, setIsCartDisplayed, setItemsInCart}) {
+export default function Cart({isCartDisplayed, itemsInCart, setIsCartDisplayed, setItemsInCart}) {
     
     const handleQuantityChange = (id, newQuantity) => {
       setItemsInCart(itemsInCart.map(item =>
@@ -33,9 +35,7 @@ export default function Cart({isDisplayed, itemsInCart, setIsCartDisplayed, setI
 
     return (
         <div
-        className={`fixed top-0 right-0 w-96 h-full bg-white shadow-lg overflow-y-auto transform transition-transform duration-1000 ease-in-out z-50 ${
-            isDisplayed ? 'translate-x-0' : 'translate-x-full'
-        } `}>
+        className={`fixed top-0 right-0 w-96 h-full bg-white shadow-lg overflow-y-auto z-50`}>
             <div className="p-4 h-full">
                 <h2 className="text-xl font-semibold mb-4">Your Cart</h2>
                     {itemsInCart?.length > 0 ? (
