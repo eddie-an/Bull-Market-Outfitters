@@ -1,7 +1,6 @@
 
 
 const checkoutMethod = (itemsInCart) => {
-    console.log(process.env.REACT_APP_SERVER_URL);
     fetch(`${process.env.REACT_APP_SERVER_URL}/create-checkout-session`, {
       method: 'POST',
       headers: {

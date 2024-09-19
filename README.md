@@ -1,5 +1,7 @@
 # ShopEase
 
+Hosted on: https://shopease-6qnw.onrender.com
+
 This application uses ReactJS, TailwindCSS
 
 To run this application in development, follow these steps.
