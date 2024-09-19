@@ -6,7 +6,7 @@ function Header({ setIsCartDisplayed }) {
       <div className="sticky top-0 w-full z-40 border-b border-gray-200 h-20 bg-gray-100 drop-shadow-md flex items-center justify-between px-8">
         <div className="flex items-center">
           <Link to="/" className="hover:cursor-pointer">
-            <img src="/assets/logo.png" alt="" className="w-8 h-8 mr-2" />
+            <img src="/assets/logo.png" alt="logo" className="w-8 h-8 mr-2" />
           </Link>
           <Link to="/" className="hover:cursor-pointer">
             <h1 className="text-3xl font-semibold text-gray-800 tracking-tight">
