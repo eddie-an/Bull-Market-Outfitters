@@ -38,8 +38,6 @@ function Home({isCartDisplayed, setIsCartDisplayed, itemsInCart, setItemsInCart}
       const newItem = { product: product, quantity: quantity };
       setItemsInCart([...itemsInCart, newItem]);
     }
-    console.log(`Adding ${quantity} of ${product.name} to cart.`);
-    console.log(itemsInCart);
   };
 
   const getProducts = async () => {
@@ -52,7 +50,6 @@ function Home({isCartDisplayed, setIsCartDisplayed, itemsInCart, setItemsInCart}
     const jsonRes = await res.json();
     const items = jsonRes.message;
     setProducts(items);
-    console.log(jsonRes.message);
   }
 
   useEffect(()=> {

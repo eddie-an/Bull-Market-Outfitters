@@ -9,3 +9,6 @@ To run this application in development, follow these steps.
 - start ReactJS by running the following commands
     - `npm install` to install dependencies such as tailwindcss, react, and react-router-dom (if it's the first time running this project)
     - `npm start`
+
+
+Things left to do: Figure out a way to format product description such as newline, tabs, wrapping, etc
