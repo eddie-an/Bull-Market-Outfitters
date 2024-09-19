@@ -1,7 +1,7 @@
 
 
 const checkoutMethod = (itemsInCart) => {
-    fetch(`${process.env.REACT_APP_SERVER_URL}/create-checkout-session`, {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/stripe/create-checkout-session`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
