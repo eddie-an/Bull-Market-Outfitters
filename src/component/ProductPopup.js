@@ -19,7 +19,7 @@ const ProductPopup = ({ product, onClose, onAddToCart }) => {
             &times;
             </button>
             <div className="flex-shrink-0 w-2/5 h-full relative bg-gray-100">
-                <div className="w-full h-full bg-contain bg-no-repeat bg-center rounded-l-lg" style={{ backgroundImage: `url(${product.imageLink})`, backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}/>
+                <div className="w-full h-full bg-contain bg-no-repeat bg-center rounded-l-lg" style={{ backgroundImage: `url(${product.image})`, backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}/>
             </div>
 
             <div className="w-3/5 p-6 flex flex-col justify-between">
