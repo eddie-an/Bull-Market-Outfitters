@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import GridItem from './component/GridItem';
 import Cart from './component/Cart';
 import Header from './component/Header';
-import Products from './Products';
 import ProductPopup from './component/ProductPopup';
 import HeroSection from './component/HeroSection';
 import PromotionBanner from './component/PromotionBanner';
@@ -12,6 +11,7 @@ import SearchBar from './component/SearchBar'; // Import SearchBar
 
 function Home({isCartDisplayed, setIsCartDisplayed, itemsInCart, setItemsInCart}) {
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -24,13 +24,13 @@ function Home({isCartDisplayed, setIsCartDisplayed, itemsInCart, setItemsInCart}
   };
 
   const handleAddToCart = (product, quantity) => {
-    const exists = itemsInCart.some(item => item.product.id === product.id);
+    const exists = itemsInCart.some(item => item.product._id === product._id);
     if (exists) {
-      const existingItem = itemsInCart.find(item => item.product.id === product.id);
+      const existingItem = itemsInCart.find(item => item.product._id === product._id);
       const updatedQuantity = Number(existingItem.quantity) + Number(quantity);
 
       setItemsInCart(itemsInCart.map(item =>
-        item.product.id === product.id
+        item.product._id === product._id
           ? { ...item, quantity: Number(updatedQuantity) }
           : item
       ));
@@ -42,8 +42,25 @@ function Home({isCartDisplayed, setIsCartDisplayed, itemsInCart, setItemsInCart}
     console.log(itemsInCart);
   };
 
+  const getProducts = async () => {
+    const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/get-all-products`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    const jsonRes = await res.json();
+    const items = jsonRes.message;
+    setProducts(items);
+    console.log(jsonRes.message);
+  }
+
+  useEffect(()=> {
+    getProducts();
+  }, [])
+
   // Function to filter products based on selected category and search query
-  const filteredProducts = Products.filter(product => {
+  const filteredProducts = products.filter(product => {
     const matchesCategory = selectedCategory ? product.category === selectedCategory : true;
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
@@ -78,7 +95,7 @@ function Home({isCartDisplayed, setIsCartDisplayed, itemsInCart, setItemsInCart}
         <div className="grid lg:grid-cols-4 md:grid-cols-3 gap-x-2 gap-y-6 ml-32 mr-32">
           {filteredProducts.map((product) => (
             <GridItem
-              key={product.id}
+              key={product._id}
               product={product}
               onClick={handleProductClick}
             />
