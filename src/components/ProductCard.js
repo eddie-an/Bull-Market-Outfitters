@@ -9,10 +9,10 @@ export default function ProductCard({ product }) {
       <img src={product?.image} alt={product?.altDescription} className="w-full h-full object-cover" />
       <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-75"></div>
       <div className="absolute bottom-0 left-0 p-4">
-        <div className="text-white font-bold text-lg">
+        <div className="text-white font-bold text-xs sm:text-sm lg:text-base">
           <span>{product?.name}</span>
         </div>
-        <div className="text-white">
+        <div className="text-white text-xs sm:text-sm lg:text-base">
           <span>${dollarAmount}</span>
         </div>
       </div>

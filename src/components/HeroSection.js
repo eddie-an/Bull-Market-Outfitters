@@ -28,16 +28,17 @@ const HeroSection = () => {
 
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center justify-center w-full h-full text-white text-center p-4">
-        <h1 className="text-5xl md:text-6xl font-extrabold mb-4">Welcome to Our Store</h1>
-        <p className="text-lg md:text-xl mb-6">Discover our exclusive collection of products</p>
+        <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-extrabold mb-4">Welcome to Our Store</h1>
+        <p className="text-sm sm:text-base md:text-lg lg:text-xl mb-6">Discover our exclusive collection of products</p>
         <button 
           className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
           onClick={scrollToShopNow}
+          ref={shopNowRef}
         >
           Shop Now
         </button>
       </div>
-      <div ref={shopNowRef} id="shop-now" />
+      <div ref={shopNowRef} />
     </div>
   );
 };

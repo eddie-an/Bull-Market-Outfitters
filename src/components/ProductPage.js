@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { useParams, useNavigate } from "react-router-dom";
 import { CartContext } from '../contexts/CartContext';
 import { ProductContext } from '../contexts/ProductContext';
+import "../index.css";
 
 const ProductPage = () => {
   const { productId } = useParams();
@@ -44,38 +45,40 @@ const ProductPage = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
       {/* Header Section */}
-      <header className="bg-blue-600 text-white p-4 sticky top-20 z-20">
-        <h1 className="text-3xl font-bold">Product Details</h1>
+      <header className="bg-blue-600 text-white pl-4 p-2 sticky sm:top-20 top-14 z-20">
+        <h1 className="text-base sm:text-lg md:text-2xl font-bold">Product Details</h1>
         <button 
-          className="mt-2 text-blue-200 hover:text-blue-100"
+          className="mt-1 text-blue-200 hover:text-blue-100 text-xs md:text-base"
           onClick={() => navigate('../')}>
           Back to Products
         </button>
       </header>
 
       {/* Main Content Section */}
-      <div className="flex flex-col md:flex-row flex-1 p-8">
+      <div className="flex flex-col md:flex-row flex-1 p-4">
         {/* Product Image */}
         <div className="md:w-1/2 flex items-center justify-center mb-6 md:mb-0">
           <img 
             src={currentProduct.image} 
             alt={currentProduct.name} 
-            className="object-cover h-[500px] w-[500px] rounded-lg shadow-lg"
+            className="object-cover h-80 w-80 lg:h-[450px] lg:w-[450px] rounded-lg shadow-lg"
           />
         </div>
 
         {/* Product Details */}
-        <div className="md:w-1/2 p-6 flex flex-col justify-between">
-          <div>
-            <h2 className="text-4xl font-bold mb-4">{currentProduct.name}</h2>
-            <p className="text-gray-700 text-lg mb-4 whitespace-pre-line">{currentProduct.description}</p>
-            <p className="text-lg font-semibold mb-2">Price: ${(currentProduct.priceInCents / 100).toFixed(2)}</p>
+        <div className="md:w-1/2 p-4 flex flex-col justify-between">
+          <div className='border-b-[1px] border-gray-300 drop-shadow-md mb-6'>
+            <h2 className="mt-8 sm:text-xl md:text-2xl lg:text-3xl font-bold mb-4">{currentProduct.name}</h2>
+          </div>
+          <div className='max-h-80 md:h-80 overflow-x-hidden pr-3' id="product-description">
+            <p className="text-gray-700 text-xs sm:text-sm md:text-base lg:text-lg mb-4 whitespace-pre-line">{currentProduct.description}</p>
           </div>
 
-          {/* Quantity and Add to Cart Section */}
+          {/* Quantity, Price, and Add to Cart Section */}
           <div className="flex flex-col mb-4">
+            <p className="text-base lg:text-lg font-semibold mb-2">Price: ${(currentProduct.priceInCents / 100).toFixed(2)}</p>
             <div className="flex items-center mb-4">
-              <label className="mr-2 text-lg font-medium">Quantity:</label>
+              <label className="mr-2 text-base lg:text-lg font-medium">Quantity:</label>
               <input
                 type="number"
                 value={quantity}

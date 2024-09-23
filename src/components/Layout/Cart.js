@@ -45,7 +45,7 @@ export default function Cart() {
                       value={item.quantity}
                       onChange={(e) => itemsInCartDispatch({type: "QUANTITY_CHANGE", id: item.product._id, newQuantity: e.target.value})}
                       min="1"
-                      className="border border-gray-300 rounded-md p-1 w-16 text-center"
+                      className="border border-gray-300 rounded-md p-1 w-16 text-center outline-none focus:outline-none"
                     />
                   </div>
                 </div>

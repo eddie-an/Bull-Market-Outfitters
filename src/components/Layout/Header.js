@@ -6,19 +6,16 @@ function Header() {
   const { setIsCartDisplayed } = useContext(CartContext);
 
   return (
-    <div className="sticky top-0 w-full max-h-20 z-30 border-b border-gray-200 h-20 bg-gray-100 drop-shadow-md flex items-center justify-between px-4 sm:px-6 lg:px-8">
+    <div className="sticky top-0 w-full sm:max-h-20 max-h-14 z-30 border-b border-gray-200 h-20 bg-gray-100 drop-shadow-md flex items-center justify-between px-4 sm:px-6 lg:px-8">
       <div className="flex items-center">
         <Link to="/" className="hover:cursor-pointer">
-          <img src="/assets/logo.png" alt="logo" className="w-8 h-8 mr-2" />
+          <img src="/assets/logo.png" alt="logo" className="md:w-8 md:h-8 sm:w-6 sm:h-6 h-4 w-4 mr-2" />
         </Link>
         <Link to="/" className="hover:cursor-pointer">
           <h1 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-800 tracking-tight">
             ShopEase
           </h1>
         </Link>
-        <span className="ml-4 px-3 py-1 bg-gray-200 text-gray-600 rounded-full text-xs tracking-wide font-medium">
-          NEW
-        </span>
       </div>
       <svg
         onClick={() => setIsCartDisplayed((prev) => !prev)}
@@ -27,7 +24,7 @@ function Header() {
         viewBox="0 0 24 24"
         strokeWidth="1.5"
         stroke="currentColor"
-        className="w-8 h-8 text-gray-700 hover:text-gray-900 cursor-pointer"
+        className="sm:w-8 sm:h-8 h-6 w-6 text-gray-700 hover:text-gray-900 cursor-pointer"
       >
         <path
           strokeLinecap="round"
