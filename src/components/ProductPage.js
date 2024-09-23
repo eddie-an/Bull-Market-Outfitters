@@ -28,6 +28,11 @@ const ProductPage = () => {
     fetchProduct(); // Call the async function
   }, [productId, getProduct]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  },[]);
+
+
   if (!currentProduct) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -39,7 +44,7 @@ const ProductPage = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
       {/* Header Section */}
-      <header className="bg-blue-600 text-white p-4">
+      <header className="bg-blue-600 text-white p-4 sticky top-20 z-20">
         <h1 className="text-3xl font-bold">Product Details</h1>
         <button 
           className="mt-2 text-blue-200 hover:text-blue-100"
