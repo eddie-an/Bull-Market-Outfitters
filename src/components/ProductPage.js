@@ -8,7 +8,7 @@ const ProductPage = () => {
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
   const [currentProduct, setCurrentProduct] = useState(null);
-  const { handleAddToCart } = useContext(CartContext);
+  const { itemsInCartDispatch } = useContext(CartContext);
   const { getProduct } = useContext(ProductContext);
 
   const handleQuantityChange = (e) => {
@@ -81,7 +81,7 @@ const ProductPage = () => {
             </div>
             <button 
               onClick={() => { 
-                handleAddToCart(currentProduct, quantity); 
+                itemsInCartDispatch({type: "ADD_TO_CART", product: currentProduct, quantity}); 
                 navigate('../'); 
               }} 
               className="bg-blue-500 text-white font-semibold py-3 px-6 rounded-md hover:bg-blue-600 transition duration-200">
