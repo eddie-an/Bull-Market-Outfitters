@@ -14,7 +14,7 @@ function Layout() {
     {isCartDisplayed && (
         <Cart/>
       )}
-      <div id="content">
+      <div id="content" className="min-h-screen">
         {/* child components get injected here and replace <Outlet /> */}
         <Outlet />
       </div>

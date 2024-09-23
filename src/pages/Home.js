@@ -1,21 +1,16 @@
-import React, { useState, useContext, useEffect, useRef } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import ProductCard from '../components/ProductCard';
 import HeroSection from '../components/HeroSection';
 import PromotionBanner from '../components/PromotionBanner';
-import SearchBar from '../components/SearchBar';
 import { ProductContext } from "../contexts/ProductContext";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
 
 function Home() {
   const { products } = useContext(ProductContext);
-  const [searchQuery, setSearchQuery] = useState('');
   const [isSticky, setIsSticky] = useState(false);
   const heroSectionRef = useRef(null);
-
-  // Function to filter products based on selected category and search query
-  const filteredProducts = products.filter(product => {
-    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesSearch;
-  });
 
   // Scroll event handler
   const handleScroll = () => {
@@ -32,6 +27,34 @@ function Home() {
     };
   }, []);
 
+  // react-slick settings
+  const settings = {
+    dots: true, // Enables dots for navigation
+    infinite: true, // Infinite scrolling
+    speed: 500, // Animation speed in ms
+    slidesToShow: 4, // Number of slides visible at once
+    slidesToScroll: 1, // Number of slides to scroll on navigation
+    responsive: [ // Responsive breakpoints
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+        }
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+        }
+      }
+    ]
+  };
 
   return (
     <>
@@ -39,30 +62,22 @@ function Home() {
         <HeroSection />
       </div>
 
-      {/* Sticky Promotion Banner and Search Bar */}
       <div className={`mb-24 z-20 ${isSticky ? 'sticky sm:top-20 top-14 w-full' : 'relative'}`}>
         <PromotionBanner />
       </div>
-      <SearchBar onSearch={setSearchQuery} />
-      {searchQuery === '' ? <></> : 
-        <span className='flex flex-row justify-center'>
-          <p className='mr-2'>Showing Results for "{searchQuery}"</p><p onClick={() => setSearchQuery('')}
-            className='text-blue-700 underline hover:font-bold hover:cursor-pointer ml-2'>Clear Search</p> 
-        </span>
-        } 
+
       <h4 className="mt-8 text-center text-xl md:text-2xl font-semibold mb-4 text-gray-800">New Items</h4>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 p-4 md:p-8 flex-grow">
-          {filteredProducts.map((product) => (
-            <ProductCard key={product._id} product={product} />
+      {/* Carousel with react-slick */}
+      <div className="carousel-container m-10 mb-52">
+        <Slider {...settings}>
+          {products.map(product => (
+            <div key={product._id}>
+              <ProductCard product={product} />
+            </div>
           ))}
-        </div>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-
+        </Slider>
+      </div>
     </>
   );
 }

@@ -7,7 +7,10 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 import ContactUs from './pages/ContactUs';
 import Layout from './Layout';
-import ProductPage from './components/ProductPage';
+import ProductPage from './pages/ProductPage';
+import Shop from "./pages/Shop";
+import About from "./pages/About";
+
 
 function App() {
   return (
@@ -21,6 +24,8 @@ function App() {
             <Route path="/terms-of-service" element={<TermsOfService/>} />
             <Route path="/contact-us" element={<ContactUs />}/>
             <Route path="/:productId" element={<ProductPage/>}></Route>
+            <Route path="/shop" element={<Shop/>}></Route>
+            <Route path="/about" element={<About/>}></Route>
           </Route>
         </Routes>
       </Router>
