@@ -7,16 +7,14 @@ import { ProductContext } from "../contexts/ProductContext";
 
 function Home() {
   const { products } = useContext(ProductContext);
-  const [selectedCategory, setSelectedCategory] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSticky, setIsSticky] = useState(false);
   const heroSectionRef = useRef(null);
 
   // Function to filter products based on selected category and search query
   const filteredProducts = products.filter(product => {
-    const matchesCategory = selectedCategory ? product.category === selectedCategory : true;
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
+    return matchesSearch;
   });
 
   // Scroll event handler
@@ -59,13 +57,6 @@ function Home() {
             <ProductCard key={product._id} product={product} />
           ))}
         </div>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
       <br />
       <br />
       <br />
