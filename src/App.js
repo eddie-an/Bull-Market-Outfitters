@@ -1,42 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Success from './Success';
-import Home from './Home';
-import Cancel from "./Cancel";
-import PrivacyPolicy from './PrivacyPolicy';
-import TermsOfService from './TermsOfService';
-import ContactUs from './ContactUs';
-
+import Success from './pages/Success';
+import Home from './pages/Home';
+import Cancel from "./pages/Cancel";
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
+import ContactUs from './pages/ContactUs';
+import Layout from './Layout';
+import ProductPage from './components/ProductPage';
 
 function App() {
-  const [isCartDisplayed, setIsCartDisplayed] = useState(false);
-  const [itemsInCart, setItemsInCart] = useState([]);
   return (
-  <Router>
-    <Routes>
-      <Route path="/" element={<Home isCartDisplayed={isCartDisplayed} 
-                                    setIsCartDisplayed={setIsCartDisplayed} 
-                                    itemsInCart={itemsInCart} 
-                                    setItemsInCart={setItemsInCart}/>}/>
-      <Route path="/success" element={<Success />} />
-      <Route path="/cancel" element={<Cancel />} />
-      <Route path="/privacy-policy" element={<PrivacyPolicy
-                                            isCartDisplayed={isCartDisplayed} 
-                                            setIsCartDisplayed={setIsCartDisplayed} 
-                                            itemsInCart={itemsInCart} 
-                                            setItemsInCart={setItemsInCart}/>} />
-      <Route path="/terms-of-service" element={<TermsOfService
-                                            isCartDisplayed={isCartDisplayed} 
-                                            setIsCartDisplayed={setIsCartDisplayed} 
-                                            itemsInCart={itemsInCart} 
-                                            setItemsInCart={setItemsInCart}/>} />
-      <Route path="/contact-us" element={<ContactUs
-                                              isCartDisplayed={isCartDisplayed} 
-                                              setIsCartDisplayed={setIsCartDisplayed} 
-                                              itemsInCart={itemsInCart} 
-                                              setItemsInCart={setItemsInCart}/>} />
-    </Routes>
-  </Router>
+      <Router>
+        <Routes>
+          <Route path="/success" element={<Success />} />
+          <Route path="/cancel" element={<Cancel />} />
+          <Route element={<Layout/>}>
+            <Route path="/" element={<Home />}/>
+            <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
+            <Route path="/terms-of-service" element={<TermsOfService/>} />
+            <Route path="/contact-us" element={<ContactUs />}/>
+            <Route path="/:productId" element={<ProductPage/>}></Route>
+          </Route>
+        </Routes>
+      </Router>
   );
 }
 

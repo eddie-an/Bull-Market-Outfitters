@@ -1,21 +1,9 @@
 import React from 'react';
-import Header from './component/Header';
-import Cart from './component/Cart';
-import Footer from './component/Footer';
 
-const PrivacyPolicy = ({isCartDisplayed, setIsCartDisplayed, itemsInCart, setItemsInCart}) => {
+const PrivacyPolicy = () => {
 
     return (
     <>
-        <Header setIsCartDisplayed={setIsCartDisplayed} />
-        {isCartDisplayed && (
-        <Cart
-          isDisplayed={isCartDisplayed}
-          itemsInCart={itemsInCart}
-          setIsCartDisplayed={setIsCartDisplayed}
-          setItemsInCart={setItemsInCart}
-        />
-      )}
         <div className="p-8 mx-auto max-w-4xl">
             <h1 className="text-3xl font-bold mb-4">Privacy Policy</h1>
             
@@ -78,7 +66,6 @@ const PrivacyPolicy = ({isCartDisplayed, setIsCartDisplayed, itemsInCart, setIte
                 If you have questions or comments about this policy, you may email us at info@example.com.
             </p>
         </div>
-        <Footer />
     </>
   );
 };

@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom";
+import React, {useContext} from "react";
+import { CartContext } from "../../contexts/CartContext";
 
 
-function Header({ setIsCartDisplayed }) {
+function Header() {
+
+  const {setIsCartDisplayed} = useContext(CartContext);
     return (
       <div className="sticky top-0 w-full z-40 border-b border-gray-200 h-20 bg-gray-100 drop-shadow-md flex items-center justify-between px-8">
         <div className="flex items-center">

@@ -1,20 +1,8 @@
 import React from 'react';
-import Header from './component/Header';
-import Footer from './component/Footer';
-import Cart from './component/Cart';
 
-const TermsOfService = ({isCartDisplayed, setIsCartDisplayed, itemsInCart, setItemsInCart}) => {
+const TermsOfService = () => {
   return (
     <>
-        <Header setIsCartDisplayed={setIsCartDisplayed} />
-        {isCartDisplayed && (
-        <Cart
-        isDisplayed={isCartDisplayed}
-        itemsInCart={itemsInCart}
-        setIsCartDisplayed={setIsCartDisplayed}
-        setItemsInCart={setItemsInCart}
-        />
-    )}
         <div className="p-8 mx-auto max-w-4xl">
             <h1 className="text-3xl font-bold mb-4">Terms of Service</h1>
             
@@ -62,7 +50,6 @@ const TermsOfService = ({isCartDisplayed, setIsCartDisplayed, itemsInCart, setIt
                 If you have any questions about these Terms, please contact us at support@example.com.
             </p>
         </div>
-        <Footer />
     </>
   );
 };

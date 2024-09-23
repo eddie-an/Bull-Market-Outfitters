@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
-import Header from './component/Header';
-import Cart from './component/Cart';
-import Footer from './component/Footer';
 
-export default function ContactUs({isCartDisplayed, setIsCartDisplayed, itemsInCart, setItemsInCart}) {
+export default function ContactUs() {
     const [formData, setFormData] = useState({
       name: '',
       email: '',
@@ -54,15 +51,6 @@ export default function ContactUs({isCartDisplayed, setIsCartDisplayed, itemsInC
 
   return (
     <>
-        <Header setIsCartDisplayed={setIsCartDisplayed} />
-        {isCartDisplayed && (
-            <Cart
-            isDisplayed={isCartDisplayed}
-            itemsInCart={itemsInCart}
-            setIsCartDisplayed={setIsCartDisplayed}
-            setItemsInCart={setItemsInCart}
-            />
-        )}
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
             <div className="max-w-lg w-full bg-white shadow-md rounded p-8">
                 <h1 className="text-3xl font-bold text-center mb-6">Contact Us</h1>
@@ -128,7 +116,6 @@ export default function ContactUs({isCartDisplayed, setIsCartDisplayed, itemsInC
                 </form>
             </div>
         </div>
-        <Footer />
     </>
   );
 }
