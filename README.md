@@ -4,7 +4,7 @@
 Hosted on: https://shopease-5707.onrender.com/
 
 ### Project description
-This repository contains code for front end of the ShopEase application. The server side code is in another repository called shopEaseAPI.
+This repository contains code for front end of the ShopEase application. The server side code is in another repository called [shopEaseAPI](https://github.com/eddie-an/ShopEaseAPI).
 
 This application uses the following stack, API integrations, and tools:
 - MongoDB for backend
