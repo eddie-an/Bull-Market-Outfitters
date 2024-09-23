@@ -5,20 +5,49 @@ export default function Success() {
   const navigate = useNavigate();
   const [session, setSession] = useState(null);
   const [items, setItems] = useState(null);
+  const params = new URLSearchParams(window.location.search);
+  const sessionId = params.get('session_id');
+
+
+  const sendEmail = async (session, items) => {
+    try {
+      console.log(session, items);
+      const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/sendgrid/receipt`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          recipient: session.customer_details.email,
+          session: session,
+          items: items
+        })
+      });
+
+      if (!res.ok) throw new Error('Failed to send email');
+      const jsonRes = await res.json();
+      console.log(jsonRes.message);
+    } catch (error) {
+      console.error('Error sending email:', error);
+    }
+  };
 
   useEffect(() => {
     const fetchSession = async () => {
-      const params = new URLSearchParams(window.location.search);
-      const sessionId = params.get('session_id');
-
-      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/stripe/checkout/session/${sessionId}`);
-      const data = await response.json();
-      setSession(data.session);
-      setItems(data.items);
+      try {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/stripe/checkout/session/${sessionId}`);
+        if (!response.ok) throw new Error('Failed to fetch session');
+        const data = await response.json();
+        setSession(data.session);
+        setItems(data.items);
+        await sendEmail(data.session, data.items); // Call sendEmail after fetching session data
+      } catch (error) {
+        console.error('Error fetching session:', error);
+      }
     };
 
     fetchSession();
-  }, []);
+  }, [sessionId]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-green-100 text-center p-4 sm:p-6">
@@ -27,7 +56,7 @@ export default function Success() {
       <p className="text-base sm:text-lg text-gray-800 mb-6">
         Thank you for your purchase! Your transaction has been completed successfully.
       </p>
-      {items && session.payment_status === "paid" ? (
+      {items && session?.payment_status === "paid" ? (
         <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-6 border border-gray-200">
           <h2 className="text-xl sm:text-2xl font-semibold text-gray-700 mb-4">Items Purchased:</h2>
           <ul className="space-y-2">
