@@ -18,14 +18,14 @@ function Shop() {
       <SearchBar onSearch={setSearchQuery} />
       {searchQuery === '' ? (
         <span className="flex flex-row justify-center">
-            <p className="mr-2 text-lg font-semibold">Showing all Items</p>
+            <p className="text-base mr-2 sm:text-lg font-semibold">Showing all Items</p>
         </span>
       ) : (
         <span className="flex flex-row justify-center">
-          <p className="mr-2">Showing Results for "{searchQuery}"</p>
+          <p className="sm:mr-2 text-sm sm:text-lg">Showing Results for "{searchQuery}"</p>
           <p
             onClick={() => setSearchQuery('')}
-            className="text-blue-700 underline hover:font-bold hover:cursor-pointer ml-2"
+            className="text-blue-700 text-sm sm:text-lg underline hover:font-bold hover:cursor-pointer ml-2"
           >
             Clear Search
           </p>

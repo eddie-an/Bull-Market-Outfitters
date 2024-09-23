@@ -1,13 +1,12 @@
 import { Link } from "react-router-dom";
 import React, { useContext } from "react";
 import { CartContext } from "../../contexts/CartContext";
-import SearchBar from "../SearchBar";
 
 function Header() {
   const { setIsCartDisplayed } = useContext(CartContext);
 
   return (
-    <div className="sticky top-0 w-full sm:max-h-20 max-h-14 z-30 border-b border-gray-200 h-20 bg-gray-100 drop-shadow-md flex items-center justify-between px-4 sm:px-6 lg:px-8">
+    <div className="sticky top-0 w-full max-w-full sm:max-h-20 max-h-14 z-30 border-b border-gray-200 h-20 bg-gray-100 drop-shadow-md flex items-center justify-between px-4 sm:px-6 lg:px-8">
       <div className="flex items-center">
         <Link to="/" className="hover:cursor-pointer">
           <img src="/assets/logo.png" alt="logo" className="md:w-8 md:h-8 sm:w-6 sm:h-6 h-4 w-4 mr-2" />
@@ -19,23 +18,23 @@ function Header() {
         </Link>
       </div>
       <div className="flex flex-row">
-        <Link to="/" className="hover:cursor-pointer m-4 md:m-10">
-          <h1 className="text-base sm:text-lg md:text-xl font-normal text-gray-600 tracking-tight hover:text-gray-400">
+        <Link to="/" className="hover:cursor-pointer m-1 sm:m-4 md:m-10">
+          <h1 className="text-xs sm:text-lg md:text-xl font-normal text-gray-600 tracking-tight hover:text-gray-400">
             Home
           </h1>
         </Link>
-        <Link to="/shop" className="hover:cursor-pointer m-4 md:m-10">
-          <h1 className="text-base sm:text-lg md:text-xl font-normal text-gray-600 tracking-tight hover:text-gray-400">
+        <Link to="/shop" className="hover:cursor-pointer m-1 sm:m-4 md:m-10">
+          <h1 className="text-xs sm:text-lg md:text-xl font-normal text-gray-600 tracking-tight hover:text-gray-400">
             Shop
           </h1>
         </Link>
-        <Link to="/about" className="hover:cursor-pointer m-4 md:m-10">
-          <h1 className="text-base sm:text-lg md:text-xl font-normal text-gray-600 tracking-tight hover:text-gray-400">
+        <Link to="/about" className="hover:cursor-pointer m-1 sm:m-4 md:m-10">
+          <h1 className="text-xs sm:text-lg md:text-xl font-normal text-gray-600 tracking-tight hover:text-gray-400">
             About
           </h1>
         </Link>
       </div>
-      <div className="ml-16">
+      <div className="ml-2 sm:ml-10 md:ml-16">
         <svg
           onClick={() => setIsCartDisplayed((prev) => !prev)}
           xmlns="http://www.w3.org/2000/svg"
@@ -43,7 +42,7 @@ function Header() {
           viewBox="0 0 24 24"
           strokeWidth="1.5"
           stroke="currentColor"
-          className="sm:w-8 sm:h-8 h-6 w-6 text-gray-700 hover:text-gray-900 cursor-pointer"
+          className="sm:w-8 sm:h-8 h-4 w-4 text-gray-700 hover:text-gray-900 cursor-pointer"
         >
           <path
             strokeLinecap="round"
