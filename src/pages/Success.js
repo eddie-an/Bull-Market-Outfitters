@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {CartContext} from '../contexts/CartContext';
 
 export default function Success() {
   const navigate = useNavigate();
   const [session, setSession] = useState(null);
   const [items, setItems] = useState(null);
+  const {itemsInCartDispatch} = useContext(CartContext);
   const params = new URLSearchParams(window.location.search);
   const sessionId = params.get('session_id');
 
@@ -41,13 +43,14 @@ export default function Success() {
         setSession(data.session);
         setItems(data.items);
         await sendEmail(data.session, data.items); // Call sendEmail after fetching session data
+        itemsInCartDispatch({type: "EMPTY_CART"}); // Empty the cart
       } catch (error) {
         console.error('Error fetching session:', error);
       }
     };
 
     fetchSession();
-  }, [sessionId]);
+  }, [sessionId, itemsInCartDispatch]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-green-100 text-center p-4 sm:p-6">

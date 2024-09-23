@@ -27,6 +27,8 @@ const CartContextProvider = (props) => {
         ));
       case "SET_CART": // Payload parameters: products
         return ([...action.products]);
+      case "EMPTY_CART":
+        return ([]);
       default:
         return state;
     }
