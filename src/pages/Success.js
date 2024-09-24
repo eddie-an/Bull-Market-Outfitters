@@ -34,6 +34,72 @@ export default function Success() {
     }
   };
 
+  const getOrder = async (order_id) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/order/get-order/${order_id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        return null;
+      }
+      const order = await response.json();
+      return order;
+    } catch (error) {
+      console.error('Error getting order:', error);
+      return null;
+    }
+  }
+
+  const addOrder = async (session, items, isStockUpdated) => {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/order/add-order`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          order_id: session.id,
+          session: session,
+          items: items,
+          isStockUpdated: isStockUpdated
+        })
+      });
+
+      if (!res.ok) throw new Error('Failed to add an order to the database');
+      const jsonRes = await res.json();
+      console.log(jsonRes.message);
+    } catch (error) {
+      console.error('Error adding order:', error);
+    }
+  }
+
+
+  // IMPLEMENT THIS FUNCTION LATER
+  // TODO
+  const updateProduct = async (id, newQuantity) => {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/product/update-product/${id}`, {
+        method: 'PATCH ',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          quantity: newQuantity
+        })
+      });
+
+      if (!res.ok) throw new Error('Failed to update a product in the database');
+      const jsonRes = await res.json();
+      console.log(jsonRes.message);
+    } catch (error) {
+      console.error('Error updating product:', error);
+    }
+  }
+
   useEffect(() => {
     const fetchSession = async () => {
       try {
@@ -42,7 +108,16 @@ export default function Success() {
         const data = await response.json();
         setSession(data.session);
         setItems(data.items);
-        await sendEmail(data.session, data.items); // Call sendEmail after fetching session data
+
+        const order = await getOrder(data.session.id); // Get order details to check if stock has been updated
+        console.log(order);
+        if (!order || order.message.length < 1) { // If order doesn't exist, add it
+          await addOrder(data.session, data.items, true);
+          await sendEmail(data.session, data.items); // Call sendEmail after fetching session data
+          await updateProduct(); // TODO
+        }
+        if (order && order.isStockUpdated===false) {
+        }
         itemsInCartDispatch({type: "EMPTY_CART"}); // Empty the cart
       } catch (error) {
         console.error('Error fetching session:', error);

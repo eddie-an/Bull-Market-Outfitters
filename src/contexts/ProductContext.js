@@ -11,7 +11,7 @@ const ProductContextProvider = (props) => {
     }, [])
 
   const getAllProducts = async () => {
-      const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/get-all-products`, {
+      const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/product/get-all-products`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
@@ -23,7 +23,7 @@ const ProductContextProvider = (props) => {
   }
 
   const getProduct = async (id) => {
-    const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/get-product/${id}`, {
+    const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/product/get-product/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
