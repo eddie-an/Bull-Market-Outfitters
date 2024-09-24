@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-import { ProductContext } from "../contexts/ProductContext";
+import React from 'react';
 import Testimonial from '../components/Testimonial';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css"; 
@@ -34,7 +33,6 @@ function SampleNextArrow(props) {
 
 
 function About() {
-  const { products } = useContext(ProductContext);
 
   const testimonials = [
     { id: 1, quote: "The best eCommerce website of 2024", author: "Jonny Appleseed" },

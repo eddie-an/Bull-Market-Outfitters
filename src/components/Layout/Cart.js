@@ -1,26 +1,49 @@
 import React, { useContext } from "react";
 import { CartContext } from "../../contexts/CartContext";
-
-const checkoutMethod = (itemsInCart) => {
-  fetch(`${process.env.REACT_APP_SERVER_URL}/stripe/create-checkout-session`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      items: itemsInCart.map(item => ({ id: item.product._id, quantity: item.quantity }))
-    })
-  }).then(res => {
-    if (res.ok) return res.json();
-  }).then(({ url }) => {
-    window.location = url;
-  }).catch(error => {
-    console.error(error);
-  });
-}
+import { ProductContext } from "../../contexts/ProductContext";
 
 export default function Cart() {
   const { isCartDisplayed, setIsCartDisplayed, itemsInCart, itemsInCartDispatch } = useContext(CartContext);
+  const { products } = useContext(ProductContext);
+
+  const checkoutMethod = () => {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/stripe/create-checkout-session`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        items: itemsInCart.map(item => ({ id: item.product._id, quantity: item.quantity }))
+      })
+    }).then(res => {
+      if (res.ok) return res.json();
+    }).then(({ url }) => {
+      window.location = url;
+    }).catch(error => {
+      console.error(error);
+    });
+  }
+
+  const handleCheckout = () => {
+    let isValidQuantity = true;
+
+    // Checks to see if quantity in cart is greater than quantity in stock
+    itemsInCart.forEach(itemInCart => {
+      const matchingProduct = products.find(product => (product._id === itemInCart.product._id));
+      const productQuantityInStock = matchingProduct.quantityInStock;
+      if (productQuantityInStock < itemInCart.quantity) {
+        isValidQuantity = false;
+      }
+    });
+
+    if (!isValidQuantity) {
+      window.alert("Quantity of item(s) cannot exceed the amount left in stock");
+      return;
+    }
+    else {
+      checkoutMethod();
+    }
+  }
 
   return (
     <div className={`fixed top-0 right-0 w-full md:w-96 h-full bg-white shadow-lg overflow-y-auto z-50 transition-transform duration-300 ease-in-out ${isCartDisplayed ? 'translate-x-0' : 'translate-x-full'}`}>
@@ -71,7 +94,7 @@ export default function Cart() {
         {itemsInCart.length > 0 && (
           <div className="mt-6">
             <button
-              onClick={() => checkoutMethod(itemsInCart)}
+              onClick={() => handleCheckout()}
               className="w-full bg-blue-500 text-white font-semibold py-3 rounded-lg hover:bg-blue-600 transition duration-200"
             >
               Checkout

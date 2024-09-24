@@ -41,7 +41,6 @@ const getOrder = async (order_id) => {
 
       if (!res.ok) throw new Error('Failed to add an order to the database');
       const jsonRes = await res.json();
-      console.log(jsonRes.message);
     } catch (error) {
       console.error('Error adding order:', error);
     }

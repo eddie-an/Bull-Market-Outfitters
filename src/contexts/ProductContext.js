@@ -35,34 +35,31 @@ const ProductContextProvider = (props) => {
     return item;
   }
 
-    const updateProduct = async (items) => {
-    for (const item of items) {
-      console.log(item);
-      const matchingProduct = products.find((product)=> product._id === item.id);
-      console.log(products);
-      const newQuantity = matchingProduct.quantityInStock - item.quantity;
+  /**
+   * 
+   * @param {String} itemId   Unique item id
+   * @param {Object} update   JSON object of key value pairs of parameter to update
+   */
+  const updateProduct = async (itemId, update) => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/product/update-product`, {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/product/update-product/${itemId}`, {
           method: "PATCH",
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({
-            quantityInStock: newQuantity
-          }),
+          body: JSON.stringify(update),
         });
         if (!response.ok) {
           throw new Error('Failed to update product');
         }
-        console.log(`Updated product with ID: ${item.id}`);
       } catch (error) {
         console.error('Error updating product:', error);
       }
-    }
+    
   };
 
   return (
-      <ProductContext.Provider value={{products, getAllProducts, getProduct}}>
+      <ProductContext.Provider value={{products, getAllProducts, getProduct, updateProduct}}>
           {props.children}
       </ProductContext.Provider>
   )

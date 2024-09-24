@@ -7,7 +7,7 @@ import { OrderContext } from '../contexts/OrderContext';
 export default function Success() {
   const navigate = useNavigate();
   const {itemsInCartDispatch} = useContext(CartContext);
-  const {products, getAllProducts} = useContext(ProductContext);
+  const {products, getAllProducts, updateProduct} = useContext(ProductContext);
   const {getOrder, addOrder} = useContext(OrderContext);
   const [session, setSession] = useState(null);
   const [items, setItems] = useState(null);
@@ -17,7 +17,6 @@ export default function Success() {
 
   const sendEmail = async (session, items) => {
     try {
-      console.log(session, items);
       const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/sendgrid/receipt`, {
         method: 'POST',
         headers: {
@@ -32,74 +31,49 @@ export default function Success() {
 
       if (!res.ok) throw new Error('Failed to send email');
       const jsonRes = await res.json();
-      console.log(jsonRes.message);
     } catch (error) {
       console.error('Error sending email:', error);
     }
   };
 
+  const fetchSession = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/stripe/checkout/session/${sessionId}`);
+      if (!response.ok) throw new Error('Failed to fetch session');
+      const data = await response.json();
+      setSession(data.session);
+      setItems(data.items);
+      return data;
+    } catch (error) {
+      console.error('Error fetching session:', error);
+    }
+  }
 
-  const updateProduct = async (items) => {
+
+  const updateQuantityInStock = async (items) => {
     const allProducts = await getAllProducts();
-    console.log(allProducts);
     for (const item of items) {
-      console.log(item);
       const matchingProduct = allProducts.find((product)=> product._id === item.id);
       const newQuantity = matchingProduct.quantityInStock - item.quantity;
-      try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/product/update-product/${item.id}`, {
-          method: "PATCH",
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            quantityInStock: newQuantity
-          }),
-        });
-        if (!response.ok) {
-          throw new Error('Failed to update product');
-        }
-        console.log(`Updated product with ID: ${item.id}`);
-      } catch (error) {
-        console.error('Error updating product:', error);
-      }
+      updateProduct(item.id, {quantityInStock: newQuantity});
     }
   };
 
   useEffect(() => {
-    const fetchSession = async () => {
-      try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/stripe/checkout/session/${sessionId}`);
-        if (!response.ok) throw new Error('Failed to fetch session');
-        const data = await response.json();
-        setSession(data.session);
-        setItems(data.items);
-
-        const order = await getOrder(data.session.id); // Get order details to check if stock has been updated
-        console.log(order);
-        if (!order || order.message.length < 1) { // If order doesn't exist, add it
-          await addOrder(data.session, data.items, true);
-          await updateProduct(data.items);
-          await sendEmail(data.session, data.items); // Call sendEmail after fetching session data
-        }
-        if (order && order.isStockUpdated===false) {
-        }
-        itemsInCartDispatch({type: "EMPTY_CART"}); // Empty the cart
-      } catch (error) {
-        console.error('Error fetching session:', error);
+    const run = async () => {
+      const data = await fetchSession();
+      const order = await getOrder(data.session.id);
+      if (!order || order.message.length < 1) {
+        await addOrder(data.session, data.items, true);
+        await updateQuantityInStock(data.items);
+        await sendEmail(data.session, data.items);
       }
+      itemsInCartDispatch({ type: "EMPTY_CART" });
     };
 
-    fetchSession();
-  }, [sessionId, itemsInCartDispatch]);
+    run(); // Call the async function
+  }, []);
 
-  // DO NOT Need the following useEffect
-  useEffect(() => {
-    if (products.length === 0) {
-      // Fetch products if not already populated
-      getAllProducts();
-    }
-  }, [products, getAllProducts]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-green-100 text-center p-4 sm:p-6">

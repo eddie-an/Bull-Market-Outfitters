@@ -16,6 +16,16 @@ const ProductPage = () => {
     setQuantity(Number(e.target.value));
   };
 
+  const handleAddToCart = () => {
+    if (quantity > currentProduct.quantityInStock) {
+      window.alert("cannot exceed the number of items in stock!"); // Change this to be more user friendly
+    }
+    else {
+      itemsInCartDispatch({type: "ADD_TO_CART", product: currentProduct, quantity}); 
+      navigate('../');
+    }
+  }
+
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -97,10 +107,7 @@ const ProductPage = () => {
             </div>
             <button 
               disabled={(currentProduct.quantityInStock > 0) ? false: true}
-              onClick={() => { 
-                itemsInCartDispatch({type: "ADD_TO_CART", product: currentProduct, quantity}); 
-                navigate('../'); 
-              }} 
+              onClick={() => handleAddToCart()} 
               className={`bg-blue-500 text-white font-semibold py-3 px-6 rounded-md ${(currentProduct.quantityInStock > 0) ? 'hover:bg-blue-600': 'bg-slate-300 hover:cursor-not-allowed'}  transition duration-200`}>
               Add to Cart
             </button>
