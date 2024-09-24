@@ -1,12 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {CartContext} from '../contexts/CartContext';
+import { ProductContext } from '../contexts/ProductContext';
+import { OrderContext } from '../contexts/OrderContext';
 
 export default function Success() {
   const navigate = useNavigate();
+  const {itemsInCartDispatch} = useContext(CartContext);
+  const {products, getAllProducts} = useContext(ProductContext);
+  const {getOrder, addOrder} = useContext(OrderContext);
   const [session, setSession] = useState(null);
   const [items, setItems] = useState(null);
-  const {itemsInCartDispatch} = useContext(CartContext);
   const params = new URLSearchParams(window.location.search); // Change this to useParams. Might need to update react router
   const sessionId = params.get('session_id');
 
@@ -34,71 +38,35 @@ export default function Success() {
     }
   };
 
-  const getOrder = async (order_id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/order/get-order/${order_id}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (!response.ok) {
-        return null;
-      }
-      const order = await response.json();
-      return order;
-    } catch (error) {
-      console.error('Error getting order:', error);
-      return null;
-    }
-  }
-
-  const addOrder = async (session, items, isStockUpdated) => {
-    try {
-      const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/order/add-order`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          order_id: session.id,
-          session: session,
-          items: items,
-          isStockUpdated: isStockUpdated
-        })
-      });
-
-      if (!res.ok) throw new Error('Failed to add an order to the database');
-      const jsonRes = await res.json();
-      console.log(jsonRes.message);
-    } catch (error) {
-      console.error('Error adding order:', error);
-    }
-  }
-
 
   // IMPLEMENT THIS FUNCTION LATER
   // TODO
-  const updateProduct = async (id, newQuantity) => {
-    try {
-      const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/product/update-product/${id}`, {
-        method: 'PATCH ',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          quantity: newQuantity
-        })
-      });
-
-      if (!res.ok) throw new Error('Failed to update a product in the database');
-      const jsonRes = await res.json();
-      console.log(jsonRes.message);
-    } catch (error) {
-      console.error('Error updating product:', error);
+  const updateProduct = async (items) => {
+    const allProducts = await getAllProducts();
+    console.log(allProducts);
+    for (const item of items) {
+      console.log(item);
+      const matchingProduct = allProducts.find((product)=> product._id === item.id);
+      const newQuantity = matchingProduct.quantityInStock - item.quantity;
+      try {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/product/update-product/${item.id}`, {
+          method: "PATCH",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            quantityInStock: newQuantity
+          }),
+        });
+        if (!response.ok) {
+          throw new Error('Failed to update product');
+        }
+        console.log(`Updated product with ID: ${item.id}`);
+      } catch (error) {
+        console.error('Error updating product:', error);
+      }
     }
-  }
+  };
 
   useEffect(() => {
     const fetchSession = async () => {
@@ -113,8 +81,8 @@ export default function Success() {
         console.log(order);
         if (!order || order.message.length < 1) { // If order doesn't exist, add it
           await addOrder(data.session, data.items, true);
+          await updateProduct(data.items); // TODO
           await sendEmail(data.session, data.items); // Call sendEmail after fetching session data
-          await updateProduct(); // TODO
         }
         if (order && order.isStockUpdated===false) {
         }
@@ -126,6 +94,13 @@ export default function Success() {
 
     fetchSession();
   }, [sessionId, itemsInCartDispatch]);
+
+  useEffect(() => {
+    if (products.length === 0) {
+      // Fetch products if not already populated
+      getAllProducts();
+    }
+  }, [products, getAllProducts]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-green-100 text-center p-4 sm:p-6">

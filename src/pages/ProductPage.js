@@ -84,6 +84,7 @@ const ProductPage = () => {
                 value={quantity}
                 onChange={handleQuantityChange}
                 min="1"
+                max={currentProduct.quantityInStock}
                 className="border border-gray-300 rounded-md p-2 w-24 text-center"
               />
             </div>

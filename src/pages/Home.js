@@ -8,7 +8,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 function Home() {
-  const { products } = useContext(ProductContext);
+  const { products} = useContext(ProductContext);
   const [isSticky, setIsSticky] = useState(false);
   const heroSectionRef = useRef(null);
 

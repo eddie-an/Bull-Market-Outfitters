@@ -33,5 +33,5 @@ To run this application in development, follow these steps.
 
 
 ## TODO:
-- Implement updateProduct funtion in Success.js. 
 - Change `const params = new URLSearchParams(window.location.search);` to use useParams instead. (Also in success.js)
+- Handle error checking for item quantity in cart. Quantity must not exceed the quantityInStock
