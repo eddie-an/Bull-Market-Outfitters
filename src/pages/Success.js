@@ -39,8 +39,6 @@ export default function Success() {
   };
 
 
-  // IMPLEMENT THIS FUNCTION LATER
-  // TODO
   const updateProduct = async (items) => {
     const allProducts = await getAllProducts();
     console.log(allProducts);
@@ -81,7 +79,7 @@ export default function Success() {
         console.log(order);
         if (!order || order.message.length < 1) { // If order doesn't exist, add it
           await addOrder(data.session, data.items, true);
-          await updateProduct(data.items); // TODO
+          await updateProduct(data.items);
           await sendEmail(data.session, data.items); // Call sendEmail after fetching session data
         }
         if (order && order.isStockUpdated===false) {

@@ -34,4 +34,7 @@ To run this application in development, follow these steps.
 
 ## TODO:
 - Change `const params = new URLSearchParams(window.location.search);` to use useParams instead. (Also in success.js)
-- Handle error checking for item quantity in cart. Quantity must not exceed the quantityInStock
+- Refactor the code in Success.js to be more modular
+- Handle error checking for item quantity in cart. Quantity must not exceed the quantityInStock. The checkout button must be disabled
+- Handle error checking for (quantityInStock < quantity). The "add to cart" button must be disabled.
+- Put badges on the productCard to mark it as out of stock

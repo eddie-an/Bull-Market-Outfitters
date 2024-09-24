@@ -89,7 +89,11 @@ const ProductPage = () => {
                   className="border border-gray-300 rounded-md p-2 w-24 text-center"
                   />
               </div>
-              <span className='mr-4 text-sm lg:text-base font-light text-gray-500'>Currently {currentProduct.quantityInStock} items in stock</span>
+              { currentProduct.quantityInStock !== 0 ? (
+                <span className='mr-4 text-sm lg:text-base font-light text-gray-500'>Currently {currentProduct.quantityInStock} items in stock</span>
+              ): (
+                <span className='mr-4 text-sm lg:text-base font-light text-gray-500'>Sorry, this item is out of stock</span>
+              )}
             </div>
             <button 
               disabled={(currentProduct.quantityInStock > 0) ? false: true}
