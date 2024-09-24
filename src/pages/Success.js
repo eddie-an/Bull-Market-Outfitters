@@ -7,7 +7,7 @@ export default function Success() {
   const [session, setSession] = useState(null);
   const [items, setItems] = useState(null);
   const {itemsInCartDispatch} = useContext(CartContext);
-  const params = new URLSearchParams(window.location.search);
+  const params = new URLSearchParams(window.location.search); // Change this to useParams. Might need to update react router
   const sessionId = params.get('session_id');
 
 

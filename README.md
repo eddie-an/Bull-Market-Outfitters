@@ -29,3 +29,9 @@ To run this application in development, follow these steps.
     - `npm start`
 
 *Note that the running the front end in development might have issues as environment variables need to be configured.
+
+
+
+## TODO:
+- Implement updateProduct funtion in Success.js. 
+- Change `const params = new URLSearchParams(window.location.search);` to use useParams instead. (Also in success.js)
