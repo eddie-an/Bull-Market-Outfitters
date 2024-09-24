@@ -8,7 +8,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 function Home() {
-  const { products} = useContext(ProductContext);
+  const { products } = useContext(ProductContext);
   const [isSticky, setIsSticky] = useState(false);
   const heroSectionRef = useRef(null);
 
@@ -29,30 +29,15 @@ function Home() {
 
   // react-slick settings
   const settings = {
-    dots: true, // Enables dots for navigation
-    infinite: true, // Infinite scrolling
-    speed: 500, // Animation speed in ms
-    slidesToShow: 4, // Number of slides visible at once
-    slidesToScroll: 1, // Number of slides to scroll on navigation
-    responsive: [ // Responsive breakpoints
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-        }
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 2,
-        }
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-        }
-      }
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    responsive: [
+      { breakpoint: 1024, settings: { slidesToShow: 3 } },
+      { breakpoint: 768, settings: { slidesToShow: 2 } },
+      { breakpoint: 480, settings: { slidesToShow: 1 } }
     ]
   };
 
@@ -67,8 +52,6 @@ function Home() {
       </div>
 
       <h4 className="mt-8 text-center text-xl md:text-2xl font-semibold mb-4 text-gray-800">New Items</h4>
-
-      {/* Carousel with react-slick */}
       <div className="carousel-container m-10 mb-52">
         <Slider {...settings}>
           {products.map(product => (
@@ -78,6 +61,24 @@ function Home() {
           ))}
         </Slider>
       </div>
+
+      {/* Featured Collections Section */}
+      <section className="featured-collections text-center my-16">
+        <h4 className="text-2xl font-semibold mb-4">Featured Collections</h4>
+        <div className="flex justify-center">
+          <button className="mx-2 p-2 bg-blue-500 text-white rounded">Best Sellers</button>
+          <button className="mx-2 p-2 bg-blue-500 text-white rounded">New Arrivals</button>
+          <button className="mx-2 p-2 bg-blue-500 text-white rounded">Top Rated Gear</button>
+        </div>
+      </section>
+
+      {/* Newsletter Sign-Up */}
+      <section className="newsletter my-16 text-center">
+        <h4 className="text-2xl font-semibold mb-4">Stay Updated!</h4>
+        <p className="mb-4">Join our newsletter for exclusive deals and updates.</p>
+        <input type="email" placeholder="Enter your email" className="p-2 border rounded" />
+        <button className="ml-2 p-2 bg-blue-500 text-white rounded">Subscribe</button>
+      </section>
     </>
   );
 }

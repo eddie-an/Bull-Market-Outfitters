@@ -5,11 +5,11 @@ const SearchBar = ({ onSearch }) => {
 
 
   return (
-    <div className="w-full flex justify-center mt-4 mb-8">
+    <div className="flex justify-center mt-4 mb-8">
       <input
         type="text"
         placeholder="Search products..."
-        className="p-3 border border-gray-300 rounded-lg w-2/3 md:w-1/2 shadow-md focus:outline-none transition duration-200"
+        className="p-3 border border-gray-300 rounded-lg w-full md:w-full shadow-md focus:outline-none transition duration-200"
         onChange={(e)=>setSearchInput(e.target.value)}
         value={searchInput}
       />
