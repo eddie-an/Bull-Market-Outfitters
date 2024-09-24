@@ -77,23 +77,27 @@ const ProductPage = () => {
           {/* Quantity, Price, and Add to Cart Section */}
           <div className="flex flex-col mb-4">
             <p className="text-base lg:text-lg font-semibold mb-2">Price: ${(currentProduct.priceInCents / 100).toFixed(2)}</p>
-            <div className="flex items-center mb-4">
-              <label className="mr-2 text-base lg:text-lg font-medium">Quantity:</label>
-              <input
-                type="number"
-                value={quantity}
-                onChange={handleQuantityChange}
-                min="1"
-                max={currentProduct.quantityInStock}
-                className="border border-gray-300 rounded-md p-2 w-24 text-center"
-              />
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <label className="mr-2 text-base lg:text-lg font-medium">Quantity:</label>
+                <input
+                  type="number"
+                  value={quantity}
+                  onChange={handleQuantityChange}
+                  min="1"
+                  max={currentProduct.quantityInStock}
+                  className="border border-gray-300 rounded-md p-2 w-24 text-center"
+                  />
+              </div>
+              <span className='mr-4 text-sm lg:text-base font-light text-gray-500'>Currently {currentProduct.quantityInStock} items in stock</span>
             </div>
             <button 
+              disabled={(currentProduct.quantityInStock > 0) ? false: true}
               onClick={() => { 
                 itemsInCartDispatch({type: "ADD_TO_CART", product: currentProduct, quantity}); 
                 navigate('../'); 
               }} 
-              className="bg-blue-500 text-white font-semibold py-3 px-6 rounded-md hover:bg-blue-600 transition duration-200">
+              className={`bg-blue-500 text-white font-semibold py-3 px-6 rounded-md ${(currentProduct.quantityInStock > 0) ? 'hover:bg-blue-600': 'bg-slate-300 hover:cursor-not-allowed'}  transition duration-200`}>
               Add to Cart
             </button>
           </div>
