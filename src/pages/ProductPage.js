@@ -11,6 +11,7 @@ const ProductPage = () => {
   const [currentProduct, setCurrentProduct] = useState(null);
   const { itemsInCartDispatch } = useContext(CartContext);
   const { getProduct } = useContext(ProductContext);
+  const isOutOfStock = currentProduct?.quantityInStock === 0;
 
   const handleQuantityChange = (e) => {
     setQuantity(Number(e.target.value));
@@ -99,16 +100,16 @@ const ProductPage = () => {
                   className="border border-gray-300 rounded-md p-2 w-24 text-center"
                   />
               </div>
-              { currentProduct.quantityInStock !== 0 ? (
-                <span className='mr-4 text-sm lg:text-base font-light text-gray-500'>Currently {currentProduct.quantityInStock} items in stock</span>
-              ): (
+              { isOutOfStock ? (
                 <span className='mr-4 text-sm lg:text-base font-light text-gray-500'>Sorry, this item is out of stock</span>
+              ): (
+                <span className='mr-4 text-sm lg:text-base font-light text-gray-500'>Currently {currentProduct.quantityInStock} items in stock</span>
               )}
             </div>
             <button 
-              disabled={(currentProduct.quantityInStock > 0) ? false: true}
+              disabled={(isOutOfStock) ? true : false}
               onClick={() => handleAddToCart()} 
-              className={`bg-blue-500 text-white font-semibold py-3 px-6 rounded-md ${(currentProduct.quantityInStock > 0) ? 'hover:bg-blue-600': 'bg-slate-300 hover:cursor-not-allowed'}  transition duration-200`}>
+              className={`bg-blue-500 text-white font-semibold py-3 px-6 rounded-md ${(isOutOfStock) ?'bg-slate-300 hover:cursor-not-allowed': 'hover:bg-blue-600'}  transition duration-200`}>
               Add to Cart
             </button>
           </div>
