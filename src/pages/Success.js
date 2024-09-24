@@ -93,6 +93,7 @@ export default function Success() {
     fetchSession();
   }, [sessionId, itemsInCartDispatch]);
 
+  // DO NOT Need the following useEffect
   useEffect(() => {
     if (products.length === 0) {
       // Fetch products if not already populated
