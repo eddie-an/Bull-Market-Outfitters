@@ -58,7 +58,7 @@ const ProductPage = () => {
         <h1 className="text-base sm:text-lg md:text-2xl font-bold">Product Details</h1>
         <button 
           className="mt-1 text-white hover:text-green-100 text-xs md:text-base"
-          onClick={() => navigate('../')}>
+          onClick={() => navigate(-1)}>
           Back to Products
         </button>
       </header>

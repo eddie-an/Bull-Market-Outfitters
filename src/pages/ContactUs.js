@@ -27,24 +27,24 @@ export default function ContactUs() {
         setErrors({});
       }
   
-      try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/send-email`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formData),
-        });
-        if (response.ok) {
-          setSuccessMessage('Your message has been sent successfully!');
-          setFormData({ name: '', email: '', message: '' });
-        } else {
-          throw new Error('Failed to send email');
-        }
-      } catch (error) {
-        console.error('Error sending email:', error);
-        setSuccessMessage('Failed to send your message. Please try again later.');
-      }
+      // try {
+      //   const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/send-email`, {
+      //     method: 'POST',
+      //     headers: {
+      //       'Content-Type': 'application/json',
+      //     },
+      //     body: JSON.stringify(formData),
+      //   });
+      //   if (response.ok) {
+      //     setSuccessMessage('Your message has been sent successfully!');
+      //     setFormData({ name: '', email: '', message: '' });
+      //   } else {
+      //     throw new Error('Failed to send email');
+      //   }
+      // } catch (error) {
+      //   console.error('Error sending email:', error);
+      //   setSuccessMessage('Failed to send your message. Please try again later.');
+      // }
     };
   
     const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);

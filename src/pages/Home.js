@@ -52,7 +52,7 @@ function Home() {
         <PromotionBanner />
       </div>
 
-      <h4 className="mt-8 text-center text-xl md:text-2xl font-semibold mb-4 text-gray-800">New Items</h4>
+      <h4 className="mt-24 text-center text-xl md:text-2xl font-semibold mb-4 text-gray-800">Our Collection</h4>
       <div className="carousel-container m-10 mb-52">
         <Slider {...settings}>
           {products.map(product => (
@@ -63,23 +63,6 @@ function Home() {
         </Slider>
       </div>
 
-      {/* Featured Collections Section */}
-      <section className="featured-collections text-center my-16">
-        <h4 className="text-2xl font-semibold mb-4">Featured Collections</h4>
-        <div className="flex justify-center">
-          <button className="mx-2 p-2 theme-background hover:bg-green-700 text-white rounded">Best Sellers</button>
-          <button className="mx-2 p-2 theme-background hover:bg-green-700 text-white rounded">New Arrivals</button>
-          <button className="mx-2 p-2 theme-background hover:bg-green-700 text-white rounded">Top Rated Gear</button>
-        </div>
-      </section>
-
-      {/* Newsletter Sign-Up */}
-      <section className="newsletter my-16 text-center">
-        <h4 className="text-2xl font-semibold mb-4">Stay Updated!</h4>
-        <p className="mb-4">Join our newsletter for exclusive deals and updates.</p>
-        <input type="email" placeholder="Enter your email" className="p-2 border rounded" />
-        <button className="ml-2 p-2 theme-background hover:bg-green-700 text-white rounded">Subscribe</button>
-      </section>
     </>
   );
 }

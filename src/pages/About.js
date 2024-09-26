@@ -48,14 +48,15 @@ function About() {
 
   // Slider settings
   const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
+    className: "center",
+    centerMode: true,
     focusOnSelect: true,
+    infinite: true,
+    centerPadding: "30px",
+    slidesToShow: 2.5,
+    speed: 500,
     responsive: [
-      { breakpoint: 1024, settings: { slidesToShow: 3 } },
+      { breakpoint: 1024, settings: { slidesToShow: 2.5 } },
       { breakpoint: 768, settings: { slidesToShow: 2 } },
       { breakpoint: 480, settings: { slidesToShow: 1 } }
     ]
@@ -83,72 +84,34 @@ function About() {
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row items-center justify-between md:h-[300px] lg:h-[450px] mb-52">
-        <div className="ml-4 flex flex-col justify-center p-8 w-full sm:w-2/3">
+      <div className="flex flex-col md:flex-row items-center justify-between md:h-[400px] lg:h-[550px] mb-52">
+        <div className="ml-4 order-2 md:order-1 flex flex-col justify-start lg:justify-center p-8 w-full sm:w-2/3">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">Our Story</h2>
-          <p className="text-base text-gray-600 mb-10">
+          <p className="text-base md:text-sm lg:text-base text-gray-600 mb-10">
             At Bull Market Outfitters, we believe that looking good and feeling confident shouldn't be reserved for the boardroom. 
             Our journey began in 2020, fueled by a passion for finance and fashion. As finance enthusiasts ourselves, we recognized 
             a gap in the market for stylish yet professional apparel that resonates with our fellow market movers.
           </p>
-          <p className="text-base text-gray-600 mb-10">
+          <p className="text-base md:text-sm lg:text-base text-gray-600 mb-10">
             What started as a small project has transformed into a community of like-minded individuals who understand that 
             confidence is the best investment. Each piece in our collection is crafted with quality and purpose, allowing 
             you to express your personality while tackling market challenges head-on.
           </p>
-          <p className="text-base text-gray-600 mb-10">
+          <p className="text-base md:text-sm lg:text-base text-gray-600 mb-10">
             Join us on this journey as we continue to innovate and inspire, one stylish vest at a time. Because at Bull Market 
             Outfitters, we don’t just sell clothes; we help you build a wardrobe that reflects your ambitions!
           </p>
         </div>
-        <div className='w-screen sm:w-1/3 h-72 sm:h-full'>
+        <div className='w-screen md:w-1/3 h-72 md:h-full order-1 md:order-2'>
           <img src="/assets/suitandtie.jpg" alt="Window View" className="object-cover h-full w-full rounded-l-sm shadow-lg" />
         </div>
       </div>
 
 
-
-      {/* Core Values */}
-      <section className="mb-12 p-12">
-        <h2 className="text-center text-2xl font-bold mb-6">Our Core Values</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
-
-            <div className="p-4 border rounded-lg hover:shadow-md transition">
-              <h3 className="font-semibold text-xl mb-2">Quality</h3>
-              <p className="text-gray-800">We believe in providing gear that withstands the test of both time and market fluctuations.</p>
-            </div>
-            <div className="p-4 border rounded-lg hover:shadow-md transition">
-              <h3 className="font-semibold text-xl mb-2">Integrity</h3>
-              <p className="text-gray-800">Honesty is at the heart of our business.</p>
-            </div>
-            <div className="p-4 border rounded-lg hover:shadow-md transition">
-              <h3 className="font-semibold text-xl mb-2">Community</h3>
-              <p className="text-gray-800">Our customers come before our shareholders</p>
-            </div>
-            <div className="p-4 border rounded-lg hover:shadow-md transition">
-              <h3 className="font-semibold text-xl mb-2">Innovation</h3>
-              <p className="text-gray-800">We strive to continuously improve regardless of shareholder values.</p>
-            </div>
-        </div>
-      </section>
-
-      {/* Timeline Section */}
-      <section className="mb-36">
-        <h2 className="text-center text-2xl font-bold mb-6">Our Journey</h2>
-        <ul className="space-y-4">
-          {timelineData.map(({ year, event }, index) => (
-            <li key={index} className="flex flex-col sm:flex-row justify-between bg-gray-100 p-4 rounded-md shadow-lg">
-              <div className="text-xl font-bold text-green-600">{year}</div>
-              <div className="text-gray-700 mt-2 sm:mt-0">{event}</div>
-            </li>
-          ))}
-        </ul>
-      </section>
-
       {/* Testimonials Section */}
       <section className="mb-0 pb-36">
       <h2 className="text-2xl font-bold text-center mb-2">What Customers Think</h2>
-      <div className="carousel-container mx-12">
+      <div className="carousel-container mx-12 my-8">
         <Slider {...settings}>
           {testimonials.map(({ id, quote, author }) => (
             <div key={id} className="rounded-md mx-2">
