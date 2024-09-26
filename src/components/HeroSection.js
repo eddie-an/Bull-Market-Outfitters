@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import "../index.css";
 
 const HeroSection = () => {
   const shopNowRef = useRef(null);
@@ -19,7 +20,7 @@ const HeroSection = () => {
         muted
         playsInline
       >
-        <source src="/assets/landingpagevideo.mp4" type="video/mp4" />
+        <source src="/assets/nyse.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
 
@@ -28,10 +29,10 @@ const HeroSection = () => {
 
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center justify-center w-full h-full text-white text-center p-4">
-        <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-extrabold mb-4">Welcome to Our Store</h1>
+        <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-extrabold mb-4">Look Good, Feel Bullish</h1>
         <p className="text-sm sm:text-base md:text-lg lg:text-xl mb-6">Discover our exclusive collection of products</p>
         <button 
-          className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
+          className="bg-green-950 hover:bg-green-800 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
           onClick={scrollToShopNow}
           ref={shopNowRef}
         >

@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+.theme-background {
+  background-color: #50A060;
+  
+}
+
+.theme-text {
+  color: #50A060;
+}
+
 
 #product-description::-webkit-scrollbar {
   display: none;
@@ -27,3 +36,5 @@
 .slick-slide:not(.slick-center) {
   transform: scale(0.9); /* Smaller scale */
 }
+
+/* Icon colour: #50A060 */

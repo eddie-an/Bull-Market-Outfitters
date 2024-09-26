@@ -9,11 +9,11 @@ function Header() {
     <div className="sticky top-0 w-full max-w-full sm:max-h-20 max-h-14 z-30 border-b border-gray-200 h-20 bg-gray-100 drop-shadow-md flex items-center justify-between px-4 sm:px-6 lg:px-8">
       <div className="flex items-center">
         <Link to="/" className="hover:cursor-pointer">
-          <img src="/assets/logo.png" alt="logo" className="md:w-8 md:h-8 sm:w-6 sm:h-6 h-4 w-4 mr-2" />
+          <img src="/assets/logo.png" alt="logo" className="md:w-16 md:h-16 sm:w-12 sm:h-12 h-10 w-10 mr-2" />
         </Link>
         <Link to="/" className="hover:cursor-pointer">
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-800 tracking-tight">
-            ShopEase
+          <h1 className="text-base sm:text-lg md:text-xl font-semibold text-gray-800 tracking-tight">
+            Bull Market Outfitters
           </h1>
         </Link>
       </div>

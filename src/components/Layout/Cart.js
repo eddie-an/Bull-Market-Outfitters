@@ -95,7 +95,7 @@ export default function Cart() {
           <div className="mt-6">
             <button
               onClick={() => handleCheckout()}
-              className="w-full bg-blue-500 text-white font-semibold py-3 rounded-lg hover:bg-blue-600 transition duration-200"
+              className="w-full theme-background text-white font-semibold py-3 rounded-lg hover:bg-green-700 transition duration-200"
             >
               Checkout
             </button>

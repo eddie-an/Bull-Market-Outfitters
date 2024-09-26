@@ -56,10 +56,10 @@ const ProductPage = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
       {/* Header Section */}
-      <header className="bg-blue-600 text-white pl-4 p-2 sticky sm:top-20 top-14 z-20">
+      <header className="theme-background text-white pl-4 p-2 sticky sm:top-20 top-14 z-20">
         <h1 className="text-base sm:text-lg md:text-2xl font-bold">Product Details</h1>
         <button 
-          className="mt-1 text-blue-200 hover:text-blue-100 text-xs md:text-base"
+          className="mt-1 text-white hover:text-green-100 text-xs md:text-base"
           onClick={() => navigate('../')}>
           Back to Products
         </button>
@@ -109,7 +109,7 @@ const ProductPage = () => {
             <button 
               disabled={(isOutOfStock) ? true : false}
               onClick={() => handleAddToCart()} 
-              className={`bg-blue-500 text-white font-semibold py-3 px-6 rounded-md ${(isOutOfStock) ?'bg-slate-300 hover:cursor-not-allowed': 'hover:bg-blue-600'}  transition duration-200`}>
+              className={`theme-background text-white font-semibold py-3 px-6 rounded-md ${(isOutOfStock) ?'bg-slate-300 hover:cursor-not-allowed': 'hover:bg-green-700'}  transition duration-200`}>
               Add to Cart
             </button>
           </div>
