@@ -67,9 +67,9 @@ function Home() {
       <section className="featured-collections text-center my-16">
         <h4 className="text-2xl font-semibold mb-4">Featured Collections</h4>
         <div className="flex justify-center">
-          <button className="mx-2 p-2 bg-blue-500 text-white rounded">Best Sellers</button>
-          <button className="mx-2 p-2 bg-blue-500 text-white rounded">New Arrivals</button>
-          <button className="mx-2 p-2 bg-blue-500 text-white rounded">Top Rated Gear</button>
+          <button className="mx-2 p-2 theme-background hover:bg-green-700 text-white rounded">Best Sellers</button>
+          <button className="mx-2 p-2 theme-background hover:bg-green-700 text-white rounded">New Arrivals</button>
+          <button className="mx-2 p-2 theme-background hover:bg-green-700 text-white rounded">Top Rated Gear</button>
         </div>
       </section>
 
@@ -78,7 +78,7 @@ function Home() {
         <h4 className="text-2xl font-semibold mb-4">Stay Updated!</h4>
         <p className="mb-4">Join our newsletter for exclusive deals and updates.</p>
         <input type="email" placeholder="Enter your email" className="p-2 border rounded" />
-        <button className="ml-2 p-2 bg-blue-500 text-white rounded">Subscribe</button>
+        <button className="ml-2 p-2 theme-background hover:bg-green-700 text-white rounded">Subscribe</button>
       </section>
     </>
   );

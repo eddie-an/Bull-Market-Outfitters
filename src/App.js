@@ -10,6 +10,7 @@ import Layout from './Layout';
 import ProductPage from './pages/ProductPage';
 import Shop from "./pages/Shop";
 import About from "./pages/About";
+import ErrorPage from './pages/ErrorPage';
 
 
 function App() {
@@ -23,9 +24,10 @@ function App() {
             <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
             <Route path="/terms-of-service" element={<TermsOfService/>} />
             <Route path="/contact-us" element={<ContactUs />}/>
-            <Route path="/:productId" element={<ProductPage/>}></Route>
+            <Route path="/product/:productId" element={<ProductPage/>}></Route>
             <Route path="/shop" element={<Shop/>}></Route>
             <Route path="/about" element={<About/>}></Route>
+            <Route path="/*" element={<ErrorPage/>}></Route>
           </Route>
         </Routes>
       </Router>

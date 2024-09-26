@@ -9,7 +9,7 @@ export default function ProductCard({ product }) {
     <div 
       className={`relative w-full cursor-pointer transition-transform transform hover:scale-105 ${
         isOutOfStock ? 'opacity-65 filter grayscale-[50%]': ''} shadow-lg rounded-lg overflow-hidden`} 
-      onClick={() => navigate(`/${product._id}`)} // Prevent navigation if out of stock
+      onClick={() => navigate(`/product/${product._id}`)} // Prevent navigation if out of stock
     >
       <img src={product?.image} alt={product?.altDescription} className="w-full h-full object-cover" />
       <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-75"></div>
