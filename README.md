@@ -1,4 +1,4 @@
-# ShopEase
+# Bull Market Outfitters
 
 ### Web Page
 Hosted on: https://shopease-5707.onrender.com/
@@ -34,4 +34,3 @@ To run this application in development, follow these steps.
 
 ## TODO:
 - Change `const params = new URLSearchParams(window.location.search);` to use useParams instead. (Also in success.js)
-- Put badges on the productCard to mark it as out of stock
