@@ -1,7 +1,7 @@
 # Bull Market Outfitters
 
 ### Web Page
-Hosted on: https://shopease-5707.onrender.com/
+Hosted on: https://bull-market-outfitters.onrender.com
 
 ### Project description
 This repository contains code for front end of the ShopEase application. The server side code is in another repository called [Bull-Market-Outfitters-API](https://github.com/eddie-an/Bull-Market-Outfitters-API).
