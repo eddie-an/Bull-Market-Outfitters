@@ -23,7 +23,7 @@ To prevent the delay, [Cron-job](https://cron-job.org/en/) is used to ping the A
 ### Running in development environment
 To run this application in development, follow these steps.
 
-- Clone the repo using `git clone https://github.com/eddie-an/ShopEase`
+- Clone the repo using `git clone https://github.com/eddie-an/Bull-Market-Outfitters`
 - start ReactJS by running the following commands
     - `npm install` to install dependencies such as tailwindcss, react, and react-router-dom (if it's the first time running this project)
     - `npm start`
