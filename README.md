@@ -3,6 +3,8 @@
 ### Web Page
 Hosted on: https://bull-market-outfitters.onrender.com
 
+The checkout process isn't real as Stripe isn't connected to a bank account. To simulate a purchase, please use 4242 4242 4242 4242 as the test VISA card number for checkout. CVV and expiry date can be any value.
+
 ### Project description
 This repository contains code for front end of the ShopEase application. The server side code is in another repository called [Bull-Market-Outfitters-API](https://github.com/eddie-an/Bull-Market-Outfitters-API).
 
