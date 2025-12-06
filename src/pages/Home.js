@@ -55,7 +55,7 @@ function Home() {
       <h4 className="mt-24 text-center text-xl md:text-2xl font-semibold mb-4 text-gray-800">Our Collection</h4>
       <div className="carousel-container m-10 mb-52">
         
-        {products?
+        {products?.length > 0?
         <Slider {...settings}>
           {products?.map(product => (
             <div key={product._id}>
