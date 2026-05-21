@@ -1,9 +1,13 @@
-import React from 'react';
+import React from "react";
 
 const PromotionBanner = () => {
   return (
-    <div className="w-full z-20 theme-background text-black sm:p-4 p-3 text-center shadow-md">
-      <p className="sm:text-lg text-xs font-semibold">🔥 New Items In Stock! Up to 50% off selected items. Don't miss out! 🔥</p>
+    <div className="w-full border-y border-brand-200/60 bg-gradient-to-r from-brand-800 via-brand-700 to-brand-800 px-4 py-3 text-center shadow-sm">
+      <p className="text-xs font-semibold tracking-wide text-cream sm:text-sm">
+        <span className="text-brass">New arrivals</span>
+        <span className="mx-2 text-brand-200">·</span>
+        Up to 50% off select items — limited time
+      </p>
     </div>
   );
 };

@@ -1,46 +1,52 @@
-import React, { useRef } from 'react';
-import "../index.css";
+import React, { useRef } from "react";
+import { Link } from "react-router-dom";
 
-const HeroSection = () => {
+const HeroSection = ({ onScrollToCollection }) => {
   const shopNowRef = useRef(null);
 
   const scrollToShopNow = () => {
-    if (shopNowRef.current) {
-      shopNowRef.current.scrollIntoView({ behavior: 'smooth' });
+    if (onScrollToCollection) {
+      onScrollToCollection();
+    } else if (shopNowRef.current) {
+      shopNowRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
 
   return (
-    <div className="relative w-full h-screen overflow-hidden">
-      {/* Video background */}
+    <section className="relative h-[85vh] min-h-[480px] w-full overflow-hidden">
       <video
-        className="absolute top-0 left-0 w-full h-full object-cover"
+        className="absolute inset-0 h-full w-full object-cover"
         autoPlay
         loop
         muted
         playsInline
       >
         <source src="/assets/nyse.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
       </video>
 
-      {/* Overlay */}
-      <div className="absolute top-0 left-0 w-full h-full bg-black opacity-60"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-brand-950/70 via-brand-900/50 to-brand-950/80" />
 
-      {/* Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center w-full h-full text-white text-center p-4">
-        <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-extrabold mb-4">Look Good, Feel Bullish</h1>
-        <p className="text-sm sm:text-base md:text-lg lg:text-xl mb-6">Discover our exclusive collection of products</p>
-        <button 
-          className="bg-green-950 hover:bg-green-800 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
-          onClick={scrollToShopNow}
-          ref={shopNowRef}
-        >
-          Shop Now
-        </button>
+      <div className="relative z-10 flex h-full flex-col items-center justify-center px-4 text-center text-cream">
+        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-brass sm:text-sm">
+          Premium finance lifestyle
+        </p>
+        <h1 className="font-display text-4xl font-bold leading-tight sm:text-5xl md:text-6xl lg:text-7xl">
+          Look Good, Feel Bullish
+        </h1>
+        <p className="mt-4 max-w-xl text-base text-stone-200 sm:text-lg md:text-xl">
+          Curated apparel and accessories for those who mean business — on and off the trading floor.
+        </p>
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <button type="button" onClick={scrollToShopNow} className="btn-primary">
+            Shop the collection
+          </button>
+          <Link to="/shop" className="btn-secondary border-cream/30 bg-white/10 text-cream hover:bg-white/20 hover:text-white">
+            Browse all
+          </Link>
+        </div>
       </div>
-      <div ref={shopNowRef} />
-    </div>
+      <div ref={shopNowRef} className="absolute bottom-0" aria-hidden />
+    </section>
   );
 };
 
