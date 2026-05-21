@@ -1,112 +1,163 @@
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import { CartContext } from "../../contexts/CartContext";
 import { ProductContext } from "../../contexts/ProductContext";
 
 export default function Cart() {
-  const { isCartDisplayed, setIsCartDisplayed, itemsInCart, itemsInCartDispatch } = useContext(CartContext);
+  const { isCartDisplayed, setIsCartDisplayed, itemsInCart, itemsInCartDispatch } =
+    useContext(CartContext);
   const { products } = useContext(ProductContext);
+
+  const subtotal = itemsInCart.reduce(
+    (sum, item) => sum + (item.product.priceInCents / 100) * item.quantity,
+    0
+  );
 
   const checkoutMethod = () => {
     fetch(`${process.env.REACT_APP_SERVER_URL}/stripe/create-checkout-session`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        items: itemsInCart.map(item => ({ id: item.product._id, quantity: item.quantity }))
+        items: itemsInCart.map((item) => ({
+          id: item.product._id,
+          quantity: item.quantity,
+        })),
+      }),
+    })
+      .then((res) => {
+        if (res.ok) return res.json();
       })
-    }).then(res => {
-      if (res.ok) return res.json();
-    }).then(({ url }) => {
-      window.location = url;
-    }).catch(error => {
-      console.error(error);
-    });
-  }
+      .then(({ url }) => {
+        window.location = url;
+      })
+      .catch(console.error);
+  };
 
   const handleCheckout = () => {
     let isValidQuantity = true;
-
-    // Checks to see if quantity in cart is greater than quantity in stock
-    itemsInCart.forEach(itemInCart => {
-      const matchingProduct = products.find(product => (product._id === itemInCart.product._id));
-      const productQuantityInStock = matchingProduct.quantityInStock;
-      if (productQuantityInStock < itemInCart.quantity) {
+    itemsInCart.forEach((itemInCart) => {
+      const matchingProduct = products.find(
+        (p) => p._id === itemInCart.product._id
+      );
+      if (matchingProduct && matchingProduct.quantityInStock < itemInCart.quantity) {
         isValidQuantity = false;
       }
     });
 
     if (!isValidQuantity) {
-      window.alert("Quantity of item(s) cannot exceed the amount left in stock");
+      window.alert("Quantity cannot exceed available stock.");
       return;
     }
-    else {
-      checkoutMethod();
-    }
-  }
+    checkoutMethod();
+  };
+
+  if (!isCartDisplayed) return null;
 
   return (
-    <div className={`fixed top-0 right-0 w-full md:w-96 h-full bg-white shadow-lg overflow-y-auto z-50 transition-transform duration-300 ease-in-out ${isCartDisplayed ? 'translate-x-0' : 'translate-x-full'}`}>
-      <div className="p-6 h-full flex flex-col">
-        <h2 className="text-2xl font-bold mb-6 text-center">Your Cart</h2>
-        
-        {itemsInCart?.length > 0 ? (
-          <div className="flex-grow overflow-y-auto">
-            {itemsInCart.map(item => (
-              <div key={item.product._id} className="flex items-center justify-between mb-4 p-4 border-b border-gray-200">
-                {/* Product Image */}
-                <div className="h-16 w-16 bg-cover bg-center rounded-md" style={{ backgroundImage: `url(${item.product.image})` }}></div>
+    <>
+      <button
+        type="button"
+        className="fixed inset-0 z-50 bg-brand-950/40 backdrop-blur-sm"
+        onClick={() => setIsCartDisplayed(false)}
+        aria-label="Close cart"
+      />
+      <aside className="fixed right-0 top-0 z-50 flex h-full w-full max-w-md flex-col bg-cream shadow-2xl">
+        <div className="flex items-center justify-between border-b border-stone-200 px-6 py-5">
+          <h2 className="font-display text-xl font-semibold text-ink">Your cart</h2>
+          <button
+            type="button"
+            onClick={() => setIsCartDisplayed(false)}
+            className="rounded-full p-2 text-stone-500 transition hover:bg-stone-100 hover:text-ink"
+            aria-label="Close"
+          >
+            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
 
-                {/* Product Details */}
-                <div className="flex-1 ml-4">
-                  <div className="font-semibold text-base">{item.product.name}</div>
-                  <div className="text-gray-500 text-sm mb-1">${(item.product.priceInCents / 100).toFixed(2)}</div>
-                  <div className="flex items-center">
-                    <label className="mr-2 text-xs font-medium">Quantity:</label>
-                    <input
-                      type="number"
-                      value={item.quantity}
-                      onChange={(e) => itemsInCartDispatch({type: "QUANTITY_CHANGE", id: item.product._id, newQuantity: e.target.value})}
-                      min="1"
-                      max={item.product.quantityInStock}
-                      className="border border-gray-300 rounded-md p-1 w-16 text-center outline-none focus:outline-none"
-                    />
+        <div className="flex flex-1 flex-col overflow-hidden p-6">
+          {itemsInCart?.length > 0 ? (
+            <ul className="flex-1 space-y-4 overflow-y-auto pr-1">
+              {itemsInCart.map((item) => (
+                <li
+                  key={item.product._id}
+                  className="flex gap-4 rounded-xl border border-stone-200/80 bg-white p-4 shadow-sm"
+                >
+                  <div
+                    className="h-20 w-20 shrink-0 rounded-lg bg-cover bg-center"
+                    style={{ backgroundImage: `url(${item.product.image})` }}
+                  />
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate font-semibold text-ink">{item.product.name}</p>
+                    <p className="text-sm text-stone-500">
+                      ${(item.product.priceInCents / 100).toFixed(2)} each
+                    </p>
+                    <div className="mt-2 flex items-center gap-2">
+                      <label className="text-xs font-medium text-stone-600">Qty</label>
+                      <input
+                        type="number"
+                        value={item.quantity}
+                        onChange={(e) =>
+                          itemsInCartDispatch({
+                            type: "QUANTITY_CHANGE",
+                            id: item.product._id,
+                            newQuantity: e.target.value,
+                          })
+                        }
+                        min="1"
+                        max={item.product.quantityInStock}
+                        className="input-field w-16 py-1 text-center text-sm"
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        itemsInCartDispatch({
+                          type: "REMOVE_FROM_CART",
+                          id: item.product._id,
+                        })
+                      }
+                      className="mt-2 text-xs font-medium text-red-600 hover:text-red-700"
+                    >
+                      Remove
+                    </button>
                   </div>
-                </div>
+                  <p className="shrink-0 font-semibold text-ink">
+                    ${((item.product.priceInCents / 100) * item.quantity).toFixed(2)}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <div className="flex flex-1 flex-col items-center justify-center text-center">
+              <p className="text-stone-600">Your cart is empty.</p>
+              <Link
+                to="/shop"
+                onClick={() => setIsCartDisplayed(false)}
+                className="btn-primary mt-4"
+              >
+                Start shopping
+              </Link>
+            </div>
+          )}
 
-                {/* Remove Item Button */}
-                <div className="flex flex-col items-end">
-                  <div className="font-bold text-base">
-                    ${(item.product.priceInCents / 100 * item.quantity).toFixed(2)}
-                  </div>
-                  <button onClick={() => itemsInCartDispatch({type: "REMOVE_FROM_CART", id: item.product._id})} className="text-red-500 hover:text-red-600 mt-1">
-                    Remove
-                  </button>
-                </div>
+          {itemsInCart.length > 0 && (
+            <div className="mt-6 border-t border-stone-200 pt-6">
+              <div className="mb-4 flex justify-between text-sm">
+                <span className="text-stone-600">Subtotal</span>
+                <span className="font-semibold text-ink">${subtotal.toFixed(2)}</span>
               </div>
-            ))}
-          </div>
-        ) : (
-          <p className="text-center text-gray-600">Your cart is empty.</p>
-        )}
-
-        {/* Checkout Button */}
-        {itemsInCart.length > 0 && (
-          <div className="mt-6">
-            <button
-              onClick={() => handleCheckout()}
-              className="w-full theme-background text-white font-semibold py-3 rounded-lg hover:bg-green-700 transition duration-200"
-            >
-              Checkout
-            </button>
-          </div>
-        )}
-      </div>
-
-      {/* Close Button */}
-      <button onClick={() => setIsCartDisplayed(false)} className="absolute top-3 right-3 text-xl font-bold text-gray-600 hover:text-gray-800">
-        &times;
-      </button>
-    </div>
+              <p className="mb-4 text-xs text-stone-500">
+                Shipping calculated at checkout
+              </p>
+              <button type="button" onClick={handleCheckout} className="btn-primary w-full">
+                Checkout
+              </button>
+            </div>
+          )}
+        </div>
+      </aside>
+    </>
   );
 }

@@ -89,63 +89,77 @@ export default function Success() {
   const shippingTotal = session?.shipping_cost?.amount_total ?? 0;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-green-100 text-center p-4 sm:p-6">
-      <img src="/assets/success-image.png" alt="Success" className="w-36 h-36 sm:w-48 sm:h-48 mb-6 rounded-full shadow-lg" />
-      <h1 className="text-4xl sm:text-5xl font-bold text-green-700 mb-4">Payment Successful!</h1>
-      <p className="text-base sm:text-lg text-gray-800 mb-6">
-        Thank you for your purchase! Your transaction has been completed successfully.
-      </p>
-
-      {fulfillmentStatus === 'loading' && (
-        <p className="text-gray-600 mb-6">Confirming your order...</p>
-      )}
-
-      {fulfillmentStatus === 'pending' && isPaid && (
-        <p className="text-gray-600 mb-6">
-          Your payment was received. Order confirmation is still processing — you will receive a receipt email shortly.
+    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-brand-50 to-cream px-4 py-12 text-center sm:px-6">
+      <div className="w-full max-w-lg rounded-2xl border border-brand-100 bg-white p-8 shadow-card sm:p-10">
+        <img
+          src="/assets/success-image.png"
+          alt="Success"
+          className="mx-auto mb-6 h-28 w-28 rounded-full ring-4 ring-brand-100 sm:h-36 sm:w-36"
+        />
+        <h1 className="font-display text-3xl font-bold text-brand-800 sm:text-4xl">
+          Payment successful
+        </h1>
+        <p className="mt-3 text-stone-600">
+          Thank you for your purchase. Your transaction is complete.
         </p>
-      )}
 
-      {error && (
-        <p className="text-red-600 mb-6">{error}</p>
-      )}
+        {fulfillmentStatus === "loading" && (
+          <p className="mt-4 text-sm text-stone-500">Confirming your order…</p>
+        )}
 
-      {items && isPaid ? (
-        <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-6 border border-gray-200">
-          <h2 className="text-xl sm:text-2xl font-semibold text-gray-700 mb-4">Items Purchased:</h2>
-          <ul className="space-y-2">
-            {items.map(item => (
-              <li key={item.id} className="flex justify-between items-center p-2 hover:bg-gray-50 transition duration-300 rounded">
-                <span className="text-gray-600 text-sm sm:text-base">{item.name}</span>
-                <span className="font-semibold text-sm sm:text-base">{item.quantity} x ${(item.priceInCents / 100).toFixed(2)}</span>
-              </li>
-            ))}
-          </ul>
-          <div className="mt-4 border-t pt-4">
-            <span className="text-base sm:text-lg font-semibold">Subtotal: ${(session.amount_subtotal / 100).toFixed(2)}</span>
-            <br />
-            <span className="text-xs sm:text-sm font-bold">Shipping cost: ${(shippingTotal / 100).toFixed(2)}</span>
-            <br />
-            <span className="text-base sm:text-lg font-semibold">Total: ${(session.amount_total / 100).toFixed(2)}</span>
-            <br /><br />
-            {session.customer_details?.email && (
-              <span className="text-xs sm:text-sm font-light">
-                A receipt will be sent to {session.customer_details.email}
-              </span>
-            )}
+        {fulfillmentStatus === "pending" && isPaid && (
+          <p className="mt-4 rounded-lg bg-brass/10 px-4 py-3 text-sm text-brand-800">
+            Payment received — order confirmation is processing. You will receive a receipt
+            email shortly.
+          </p>
+        )}
+
+        {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
+
+        {items && isPaid ? (
+          <div className="mt-8 rounded-xl bg-parchment/40 p-5 text-left">
+            <h2 className="font-display text-lg font-semibold text-ink">Order summary</h2>
+            <ul className="mt-4 space-y-3">
+              {items.map((item) => (
+                <li key={item.id} className="flex justify-between text-sm">
+                  <span className="text-stone-600">{item.name}</span>
+                  <span className="font-medium text-ink">
+                    {item.quantity} × ${(item.priceInCents / 100).toFixed(2)}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-4 space-y-1 border-t border-stone-200 pt-4 text-sm">
+              <p className="flex justify-between">
+                <span className="text-stone-600">Subtotal</span>
+                <span>${(session.amount_subtotal / 100).toFixed(2)}</span>
+              </p>
+              <p className="flex justify-between">
+                <span className="text-stone-600">Shipping</span>
+                <span>${(shippingTotal / 100).toFixed(2)}</span>
+              </p>
+              <p className="flex justify-between font-semibold text-ink">
+                <span>Total</span>
+                <span>${(session.amount_total / 100).toFixed(2)}</span>
+              </p>
+              {session.customer_details?.email && (
+                <p className="pt-2 text-xs text-stone-500">
+                  Receipt sent to {session.customer_details.email}
+                </p>
+              )}
+            </div>
           </div>
-        </div>
-      ) : (
-        !error && fulfillmentStatus !== 'loading' && (
-          <p className="text-gray-500 mb-6">No items purchased.</p>
-        )
-      )}
-      <button
-        onClick={() => navigate('../')}
-        className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 sm:py-3 sm:px-6 rounded transition duration-300 mt-4 shadow"
-      >
-        Back to Menu
-      </button>
+        ) : (
+          !error &&
+          fulfillmentStatus !== "loading" && (
+            <p className="mt-6 text-stone-500">No items purchased.</p>
+          )
+        )}
+
+        <button type="button" onClick={() => navigate("/")} className="btn-primary mt-8">
+          Back to home
+        </button>
+      </div>
     </div>
   );
 }

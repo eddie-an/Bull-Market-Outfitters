@@ -1,16 +1,16 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 const ErrorPage = () => {
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
-      <h1 className="text-6xl font-bold text-red-600 mb-4">404</h1>
-      <h2 className="text-2xl font-semibold mb-2">Page Not Found</h2>
-      <p className="text-gray-700 mb-8">
-        Oops! The page you are looking for doesn't exist.
+    <div className="flex min-h-[70vh] flex-col items-center justify-center px-4 text-center">
+      <p className="font-display text-8xl font-bold text-brand-200">404</p>
+      <h1 className="mt-2 font-display text-2xl font-semibold text-ink">Page not found</h1>
+      <p className="mt-2 max-w-sm text-stone-600">
+        The page you are looking for does not exist or has been moved.
       </p>
-      <Link to="/" className="theme-background text-white px-4 py-2 rounded hover:bg-green-700 transition duration-300">
-        Go Back Home
+      <Link to="/" className="btn-primary mt-8">
+        Back to home
       </Link>
     </div>
   );

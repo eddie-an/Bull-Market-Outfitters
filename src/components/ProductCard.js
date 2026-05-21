@@ -1,33 +1,42 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 export default function ProductCard({ product }) {
   const navigate = useNavigate();
-  const dollarAmount = (parseInt(product?.priceInCents) / 100).toFixed(2);
+  const dollarAmount = (parseInt(product?.priceInCents, 10) / 100).toFixed(2);
   const isOutOfStock = product?.quantityInStock === 0;
 
   return (
-    <div 
-      className={`relative w-full cursor-pointer transition-transform transform hover:scale-105 ${
-        isOutOfStock ? 'opacity-65 filter grayscale-[50%]': ''} shadow-lg rounded-lg overflow-hidden`} 
-      onClick={() => navigate(`/product/${product._id}`)} // Prevent navigation if out of stock
+    <article
+      role="button"
+      tabIndex={0}
+      onClick={() => navigate(`/product/${product._id}`)}
+      onKeyDown={(e) => e.key === "Enter" && navigate(`/product/${product._id}`)}
+      className={`group relative cursor-pointer overflow-hidden rounded-2xl bg-white shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover ${
+        isOutOfStock ? "opacity-75" : ""
+      }`}
     >
-      <img src={product?.image} alt={product?.altDescription} className="w-full h-full object-cover" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-75"></div>
-      <div className="absolute bottom-0 left-0 p-4">
-        <div className="text-white font-bold text-xs sm:text-sm lg:text-base">
-          <span>{product?.name}</span>
-        </div>
-        <div className="text-white text-xs sm:text-sm lg:text-base">
-          <span>${dollarAmount}</span>
-        </div>
+      <div className="aspect-[4/5] overflow-hidden bg-parchment">
+        <img
+          src={product?.image}
+          alt={product?.altDescription || product?.name}
+          className={`h-full w-full object-cover transition duration-500 group-hover:scale-105 ${
+            isOutOfStock ? "grayscale" : ""
+          }`}
+        />
       </div>
-      
-      {/* Out of Stock Badge */}
+
+      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-brand-950/90 via-brand-950/50 to-transparent p-4 pt-16">
+        <h3 className="font-display text-base font-semibold text-cream sm:text-lg">
+          {product?.name}
+        </h3>
+        <p className="mt-0.5 text-sm font-medium text-brass">${dollarAmount}</p>
+      </div>
+
       {isOutOfStock && (
-        <div className="absolute top-2 left-2 bg-red-600 text-white font-bold text-xs px-2 py-1 rounded">
-          Out of Stock
-        </div>
+        <span className="absolute left-3 top-3 rounded-full bg-red-600/95 px-3 py-1 text-xs font-bold uppercase tracking-wide text-white">
+          Sold out
+        </span>
       )}
-    </div>
+    </article>
   );
 }
