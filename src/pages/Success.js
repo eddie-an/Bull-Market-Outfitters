@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../contexts/CartContext';
 import { ProductContext } from '../contexts/ProductContext';
 
+const POLL_INTERVAL_MS = 2000;
+const MAX_POLL_ATTEMPTS = 15;
+
 export default function Success() {
   const navigate = useNavigate();
   const { itemsInCartDispatch } = useContext(CartContext);
@@ -15,37 +18,70 @@ export default function Success() {
   const sessionId = params.get('session_id');
 
   useEffect(() => {
+    if (!sessionId) {
+      setError('Missing checkout session.');
+      setFulfillmentStatus('error');
+      return;
+    }
+
+    let cancelled = false;
+
+    const fetchCheckoutSession = async () => {
+      const response = await fetch(
+        `${process.env.REACT_APP_SERVER_URL}/stripe/checkout/session/${sessionId}`
+      );
+      if (!response.ok) throw new Error('Failed to fetch checkout session');
+      return response.json();
+    };
+
+    const applySessionData = (data) => {
+      setSession(data.session);
+      setItems(data.items);
+      setFulfillmentStatus(data.fulfillment?.status ?? 'pending');
+    };
+
     const run = async () => {
-      if (!sessionId) {
-        setError('Missing checkout session.');
-        setFulfillmentStatus('error');
-        return;
-      }
-
       try {
-        const response = await fetch(
-          `${process.env.REACT_APP_SERVER_URL}/stripe/checkout/session/${sessionId}`
-        );
-        if (!response.ok) throw new Error('Failed to fetch checkout session');
+        let data = await fetchCheckoutSession();
+        if (cancelled) return;
 
-        const data = await response.json();
-        setSession(data.session);
-        setItems(data.items);
-        setFulfillmentStatus(data.fulfillment?.status ?? 'pending');
+        applySessionData(data);
 
-        if (data.fulfillment?.status === 'complete') {
+        if (data.session?.payment_status === 'paid') {
+          itemsInCartDispatch({ type: 'EMPTY_CART' });
+        }
+
+        let attempts = 0;
+        while (
+          !cancelled &&
+          data.session?.payment_status === 'paid' &&
+          data.fulfillment?.status !== 'complete' &&
+          attempts < MAX_POLL_ATTEMPTS
+        ) {
+          await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL_MS));
+          data = await fetchCheckoutSession();
+          if (cancelled) return;
+          applySessionData(data);
+          attempts++;
+        }
+
+        if (!cancelled && data.fulfillment?.status === 'complete') {
           await getAllProducts();
         }
       } catch (err) {
         console.error('Error loading checkout session:', err);
-        setError('Unable to load your order. Please contact support if you were charged.');
-        setFulfillmentStatus('error');
-      } finally {
-        itemsInCartDispatch({ type: 'EMPTY_CART' });
+        if (!cancelled) {
+          setError('Unable to load your order. Please contact support if you were charged.');
+          setFulfillmentStatus('error');
+        }
       }
     };
 
     run();
+
+    return () => {
+      cancelled = true;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sessionId]);
 
